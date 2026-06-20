@@ -4,6 +4,8 @@
 :root {
   --background: #feffff;
   --foreground: #080c16;
+    --accent: #0369A1;
+
 }
 
 .dark{
