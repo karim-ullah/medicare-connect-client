@@ -10,6 +10,7 @@ const DoctorPage = () => {
       const user = session?.user;
   return (
     <div className="py-10 px-6">
+        
       <h2 className="font-bold text-2xl">Welcome back, {user?.name}!</h2>
       <p className="text-primary text-sm">
         Here's a summary of your healthcare activity

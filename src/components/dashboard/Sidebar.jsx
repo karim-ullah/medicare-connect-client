@@ -41,7 +41,7 @@ export default function Sidebar() {
   const doctor = [
     {
       label: "Overview",
-      href: "/dashboard/overview",
+      href: "/dashboard/doctor",
       icon: <MdGridView size={18} />,
     },
     {
@@ -62,7 +62,7 @@ export default function Sidebar() {
     },
     {
       label: "Profile",
-      href: "/dashboard/profile",
+      href: "/dashboard/doctor/profile",
       icon: <FiUser size={18} />,
     },
   ];
@@ -93,7 +93,7 @@ export default function Sidebar() {
   const menuItems = role === 'patient' ? patient : role === 'doctor' ? doctor : admin
 
   return (
-    <aside className="h-screen w-64 border-r bg-background flex flex-col">
+    <aside className="min-h-screen w-64 border-r bg-background flex flex-col">
       <div className="border-b p-6">
         <h2 className="text-xl font-bold">Medicare Connect</h2>
       </div>
