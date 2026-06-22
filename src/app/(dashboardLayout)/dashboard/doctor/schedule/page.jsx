@@ -1,21 +1,39 @@
 "use client";
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import AddScheduleForm from "@/components/Schedule/AddScheduleForm";
+import MySchedulesCard from "@/components/Schedule/MySchedulesCard";
+import { getDoctor, getDoctorSchedules } from "@/lib/api/doctor";
 import { authClient } from "@/lib/auth-client";
-import {
-  Button,
-  Card
-} from "@heroui/react";
-import React, { useState } from "react";
-import { FiEdit } from "react-icons/fi";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { Button } from "@heroui/react";
+import React, { useEffect, useState } from "react";
 
 const SchedulePage = () => {
-    const {data:session} = authClient.useSession()
-    const user = session?.user
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  const userId = user?.id;
   const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [doctor, setDoctor] = useState(null);
+  const [doctorSchedules, setDoctorSchedules] = useState(null);
 
- 
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      const res = await getDoctor(userId);
+      setDoctor(res);
+    };
+
+    const fetchDoctorSchedules = async () => {
+      const res = await getDoctorSchedules(userId);
+      setDoctorSchedules(res);
+    };
+
+    if (userId) {
+      fetchDoctor();
+      fetchDoctorSchedules();
+    }
+  }, [userId]);
+
+  console.log(doctorSchedules, "rq");
+
   return (
     <div className="py-10 px-6">
       {/* headings */}
@@ -35,24 +53,24 @@ const SchedulePage = () => {
       {/* Add Schedule Card */}
 
       {scheduleOpen && (
-        <AddScheduleForm user={user} setScheduleOpen={setScheduleOpen}></AddScheduleForm>
+        <AddScheduleForm
+          user={user}
+          setScheduleOpen={setScheduleOpen}
+          doctor={doctor}
+        ></AddScheduleForm>
       )}
 
       {/* card */}
 
-      <div>
-        <Card className="mt-10">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3>Monday</h3>
-              <p className="text-primary">9:00 AM - 10:00 AM</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <FiEdit></FiEdit>
-              <RiDeleteBin6Line></RiDeleteBin6Line>
-            </div>
-          </div>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+        {doctorSchedules &&(
+          doctorSchedules.map((schedule) => (
+          <MySchedulesCard
+            key={schedule._id}
+            schedule={schedule}
+          ></MySchedulesCard>
+        ))
+        )}
       </div>
     </div>
   );

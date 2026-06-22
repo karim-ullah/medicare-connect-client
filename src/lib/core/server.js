@@ -1,6 +1,11 @@
 import { baseUrl } from "../baseUrl";
 
 
+export const serverFetch = async(path)=>{
+    const res = await fetch(`${baseUrl}${path}`)
+    return res.json()
+}
+
 export const serverMutation = async (path, method, data) => {
   const res = await fetch(`${baseUrl}${path}`, {
     method: method,

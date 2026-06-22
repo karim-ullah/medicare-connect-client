@@ -35,6 +35,7 @@ const DoctorProfilePage = () => {
     formData.daySlots = daySlots
     formData.doctorId = user?.id
     formData.imgUrl = user?.image
+    formData.name = user?.name
     // console.log(formData);
 
     const res = await fetch(`http://localhost:8000/api/doctors/${user?.id}`,{
