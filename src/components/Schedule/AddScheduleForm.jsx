@@ -33,6 +33,12 @@ const timeSlots = doctor.timeSlots
     formData.specialization = doctor.specialization;
     formData.experience = doctor?.experience;
     formData.name = doctor.name
+    formData.email = doctor.email
+    formData.bio = doctor.bio
+    formData.qualifications = doctor.qualifications
+    formData.phone = doctor.phone
+    formData.daySlots = daySlots
+    formData.timeSlots = timeSlots
 
     const res = await addDoctorSchedule(formData);
     console.log(res);

@@ -1,5 +1,8 @@
 import { Button } from '@heroui/react';
+import Link from 'next/link';
 import React from 'react';
+import { FiUser } from 'react-icons/fi';
+import { MdOutlineSchedule } from 'react-icons/md';
 
 const DoctorCard = ({schedule}) => {
     return (
@@ -32,20 +35,7 @@ const DoctorCard = ({schedule}) => {
               </p>
             </div>
 
-            {/* Qualifications */}
-            <div className="mt-2 flex flex-wrap gap-2">
-              <span className="rounded-full bg-primary/10 py-1 text-xs font-medium text-primary">
-                MBBS
-              </span>
-
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                FCPS
-              </span>
-
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                FACC
-              </span>
-            </div>
+           
 
             {/* Available Days */}
             <div className="mt-2">
@@ -54,7 +44,7 @@ const DoctorCard = ({schedule}) => {
                 {["Mon", "Wed", "Fri"].map((day) => (
                   <span
                     key={day}
-                    className="rounded-lg bg-default-100 py-1 text-sm"
+                    className="rounded-lg bg-accent/10 px-2 py-1 text-sm"
                   >
                     {day}
                   </span>
@@ -65,22 +55,22 @@ const DoctorCard = ({schedule}) => {
             <div className=" bg-default-200" />
 
             {/* Stats */}
-            <div className="flex items-center justify-between">
-              <div className="flex">
-                <p className="font-semibold">14 Years</p>
-                <p className="font-semibold">2,344+</p>
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex gap-3 items-center">
+                <p className="font-normal flex items-center gap-1"><MdOutlineSchedule/> 14yrs</p>
+                <p className="font-normal flex items-center gap-1"><FiUser/> 2344+</p>
               </div>
 
               
 
               <div>
-                <p className="text-lg font-bold text-primary">$13</p>
+                <p><span className="text-lg font-bold text-foreground">${schedule.fee}</span>/ <span className='font-mono'>visit</span></p>
               </div>
             </div>
 
             {/* Button */}
             <Button className="mt-5 w-full rounded-xl  font-medium transition hover:opacity-90">
-              Book Appointment
+              <Link href={`/find-doctors/${schedule._id}`}>Book Appointment</Link>
             </Button>
           </div>
         </div>

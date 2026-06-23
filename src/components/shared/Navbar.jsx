@@ -77,7 +77,7 @@ const Navbar = () => {
   return (
     
       <nav className="sticky top-0 z-40 border-b border-separator bg-background/70 backdrop-blur-lg">
-        <header className="relative container flex h-14 items-center justify-between">
+        <header className="relative container flex h-16 items-center justify-between">
           <div className="flex items-center gap-4">
             <button
               className="md:hidden"

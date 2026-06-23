@@ -95,7 +95,7 @@ export default function Sidebar() {
   return (
     <aside className="min-h-screen w-64 border-r bg-background flex flex-col">
       <div className="border-b p-6">
-        <h2 className="text-xl font-bold">Medicare Connect</h2>
+        <h2 className="text-xl font-bold"><Link href={'/'}>Medicare Connect</Link></h2>
       </div>
 
       
