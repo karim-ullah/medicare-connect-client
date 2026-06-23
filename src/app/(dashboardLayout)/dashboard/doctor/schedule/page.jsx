@@ -32,10 +32,9 @@ const SchedulePage = () => {
     }
   }, [userId]);
 
-  console.log(doctorSchedules, "rq");
 
   return (
-    <div className="py-10 px-6 bg-background">
+    <div className="py-10 px-6">
       {/* headings */}
 
       <div className="flex items-center justify-between">

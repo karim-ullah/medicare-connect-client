@@ -51,7 +51,7 @@ export default function Sidebar() {
     },
     {
       label: "Appointment Requests",
-      href: "/dashboard/appointment-requests",
+      href: "/dashboard/doctor/appointment-requests",
       icon: <VscRequestChanges size={18} />,
     },
 

@@ -1,4 +1,5 @@
 "use client";
+import { createAppointment } from "@/lib/Actions/patient/action";
 import { Button, Card, Separator } from "@heroui/react";
 import React, { useState } from "react";
 
@@ -19,12 +20,31 @@ const RightSide = ({ schedule, user }) => {
   const timeSlots = schedule.timeSlots;
 
   const totalFee = Number(schedule.fee) + 5
+
   const patientId = user?.id
+  const patientName = user?.name
   const doctorId = schedule.doctorId
   const appointmentDate = selectedDay
   const appointmentTime = selectedTime
-  const paymentStatus = 'pending'
-  
+  const paymentStatus = 'Paid'
+  const status = 'pending'
+
+
+  const appointmentData = {
+    patientId,
+    patientName,
+    doctorId,
+    appointmentDate,
+    appointmentTime,
+    paymentStatus,
+    status,
+    totalFee,
+  }
+
+  const handleAppointmentSubmit = async()=>{
+    const res = await createAppointment(appointmentData)
+    console.log(res);
+  }
 
   return (
     <div className="flex-1">
@@ -135,6 +155,7 @@ const RightSide = ({ schedule, user }) => {
 
         {/* Book Button */}
         <Button
+        onClick={handleAppointmentSubmit}
           size="lg"
           color="primary"
           className="mt-6 w-full text-lg font-semibold"

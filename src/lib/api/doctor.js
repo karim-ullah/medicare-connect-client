@@ -10,3 +10,7 @@ export const getDoctor = async(doctorId)=>{
 export const getDoctorSchedules = async(doctorId)=>{
     return serverFetch(`/api/doctor-schedule?doctorId=${doctorId}`)
 }
+
+export const getAppointmentRequests = async(doctorId)=>{
+    return serverFetch(`/api/appointment-requests?doctorId=${doctorId}`)
+}
