@@ -8,3 +8,8 @@ export const addDoctorSchedule = async(data)=>{
     return resData
 }
 
+
+export const updateSchedule = async(scheduleId, data)=>{
+    return serverMutation(`/api/update-schedule?scheduleId=${scheduleId}`, 'PATCH', data)
+}
+

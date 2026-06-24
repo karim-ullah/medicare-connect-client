@@ -1,15 +1,19 @@
 "use client";
+import { updateSchedule } from "@/lib/doctor/action";
 import { Button, Card, Input, Label, ListBox , Select, TextField} from "@heroui/react";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 
 const MySchedulesCard = ({ schedule }) => {
 
-console.log(schedule);
+
 const daySlots = schedule.daySlots
 const timeSlots = schedule.timeSlots
+const scheduleId = schedule._id
+
 
   const [open, setOpen] = useState(false);
 
@@ -17,8 +21,17 @@ const timeSlots = schedule.timeSlots
     setOpen(true);
   };
 
-  const onSubmit =()=>{
+  const onSubmit =async(e)=>{
     e.preventDefault()
+    const form = new FormData(e.target)
+    const data = Object.fromEntries(form.entries())
+    const res = await updateSchedule(scheduleId, data)
+
+    if(res.modifiedCount > 0){
+      toast.success('Schedule updated!')
+      window.location.href = '/dashboard/doctor/schedule'
+      
+    }
   }
   return (
     <div>
@@ -50,8 +63,8 @@ const timeSlots = schedule.timeSlots
                   <Select.Popover>
                     <ListBox>
                       {daySlots &&
-                        daySlots.map((slot) => (
-                          <ListBox.Item id={slot} textValue={slot}>
+                        daySlots.map((slot,index) => (
+                          <ListBox.Item key={index} id={slot} textValue={slot}>
                             {slot}
                           </ListBox.Item>
                         ))}
@@ -83,8 +96,8 @@ const timeSlots = schedule.timeSlots
                   <Select.Popover>
                     <ListBox>
                       {timeSlots &&
-                        timeSlots.map((slot) => (
-                          <ListBox.Item id={slot} textValue={slot}>
+                        timeSlots.map((slot,index) => (
+                          <ListBox.Item key={index} id={slot} textValue={slot}>
                             {slot}
                           </ListBox.Item>
                         ))}
@@ -106,8 +119,8 @@ const timeSlots = schedule.timeSlots
                   <Select.Popover>
                     <ListBox>
                       {timeSlots &&
-                        timeSlots.map((slot) => (
-                          <ListBox.Item id={slot} textValue={slot}>
+                        timeSlots.map((slot,index) => (
+                          <ListBox.Item key={index} id={slot} textValue={slot}>
                             {slot}
                           </ListBox.Item>
                         ))}
@@ -138,9 +151,15 @@ const timeSlots = schedule.timeSlots
               {schedule.startTime} - {schedule.endTime}
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+
+            <div className="cursor-pointer border border-accent p-2 rounded-lg hover:bg-accent/50">
             <FiEdit onClick={handleEdit}></FiEdit>
-            <RiDeleteBin6Line></RiDeleteBin6Line>
+            </div>
+            <div className="cursor-pointer border border-accent p-2 rounded-lg hover:bg-accent/50">
+
+            <RiDeleteBin6Line className="cursor-pointer"></RiDeleteBin6Line>
+            </div>
           </div>
         </div>
       </Card>

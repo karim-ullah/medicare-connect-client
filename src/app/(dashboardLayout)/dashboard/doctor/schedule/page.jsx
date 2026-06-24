@@ -63,9 +63,9 @@ const SchedulePage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
         {doctorSchedules &&(
-          doctorSchedules.map((schedule) => (
+          doctorSchedules.map((schedule, index) => (
           <MySchedulesCard
-            key={schedule._id}
+            key={index}
             schedule={schedule}
           ></MySchedulesCard>
         ))
