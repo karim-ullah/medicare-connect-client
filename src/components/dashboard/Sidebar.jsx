@@ -3,12 +3,16 @@
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button } from "@heroui/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaUserDoctor } from "react-icons/fa6";
 import { FiHome, FiUser, FiCalendar, FiSettings } from "react-icons/fi";
 import { LuNewspaper } from "react-icons/lu";
-import { MdGridView, MdSchedule } from "react-icons/md";
+import { MdGridView, MdKeyboardArrowRight, MdSchedule } from "react-icons/md";
 import { VscRequestChanges } from "react-icons/vsc";
 
 export default function Sidebar() {
+
+  const pathName = usePathname()
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const role = user?.role
@@ -69,24 +73,29 @@ export default function Sidebar() {
 
   const admin = [
     {
-      label: "Manage Users",
-      href: "/dashboard/manage-users",
+      label: "Overview",
+      href: "/dashboard/admin",
       icon: <FiHome size={18} />,
+    },
+    {
+      label: "Manage Users",
+      href: "/dashboard/admin/manage-users",
+      icon: <FiUser size={18} />,
     },
     {
       label: "Manage Doctors",
-      href: "/dashboard/manage-doctors",
-      icon: <FiHome size={18} />,
+      href: "/dashboard/admin/manage-doctors",
+      icon: <FaUserDoctor size={18} />,
     },
     {
       label: "Manage Appointments",
-      href: "/dashboard/manage-appointments",
-      icon: <FiHome size={18} />,
+      href: "/dashboard/admin/manage-appointments",
+      icon: <MdSchedule size={18} />,
     },
     {
       label: "payment",
-      href: "/dashboard/payment",
-      icon: <FiHome size={18} />,
+      href: "/dashboard/admin/payment",
+      icon: <FiCalendar size={18} />,
     },
   ]
 
@@ -123,17 +132,22 @@ export default function Sidebar() {
 
       {/* map link */}
         <ul className="space-y-2 py-6">
-          {menuItems.map((item,index) => (
-            <li key={index}>
+          {menuItems.map((item,index) => {
+            const isActive = pathName === item.href
+            return (
+              <li key={index}>
               <Link
                 href={item.href}
-                className="flex items-center gap-3 text-sm  rounded-xl py-2 transition hover:bg-default-100"
+                className={`flex items-center justify-between gap-3 text-sm text-foreground ${isActive ? 'bg-accent/50' : ''}  rounded-xl py-2 px-2 transition hover:bg-accent/50`}
               >
-                {item.icon}
-                <span>{item.label}</span>
+                <div className="flex items-center gap-3">{item.icon}
+                <span>{item.label}</span></div>
+                {isActive && <MdKeyboardArrowRight/>}
               </Link>
+              
             </li>
-          ))}
+            )
+          })}
         </ul>
       </nav>
 

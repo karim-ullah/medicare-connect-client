@@ -75,7 +75,7 @@ const RequestCard = ({ appointment }) => {
 
         {/* Right */}
         <div>
-          {appointment.status === 'Confirmed' ? <Button>Mark as Complete and Prescripe</Button> : <div className="space-x-3">
+          {appointment.status === 'Confirmed' || appointment.status === 'Completed' ? <Button onClick={()=> handleStatus('Completed')}>Mark as Complete and Prescripe</Button> : <div className="space-x-3">
             <Button
             onClick={() => handleStatus("Confirmed")}
             variant="outline"
