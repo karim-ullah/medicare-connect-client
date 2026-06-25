@@ -13,3 +13,7 @@ export const updateSchedule = async(scheduleId, data)=>{
     return serverMutation(`/api/update-schedule?scheduleId=${scheduleId}`, 'PATCH', data)
 }
 
+export const deleteSchedule = async(scheduleId)=>{
+    return serverMutation(`/api/delete-schedule?scheduleId=${scheduleId}`, 'DELETE')
+}
+

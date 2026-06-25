@@ -42,7 +42,7 @@ const timeSlots = doctor.timeSlots
     formData.timeSlots = timeSlots
 
     const res = await addDoctorSchedule(formData);
-    console.log(res);
+    // console.log(res);
     if (res.insertedId) {
       toast.success('Schedule added...')
       router.push('/dashboard/doctor/schedule')

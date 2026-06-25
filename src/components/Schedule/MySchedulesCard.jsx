@@ -1,5 +1,5 @@
 "use client";
-import { updateSchedule } from "@/lib/doctor/action";
+import { deleteSchedule, updateSchedule } from "@/lib/doctor/action";
 import { Button, Card, Input, Label, ListBox , Select, TextField} from "@heroui/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -32,6 +32,14 @@ const scheduleId = schedule._id
       toast.success('Schedule updated!')
       router.push('/dashboard/doctor/schedule')
       
+    }
+  }
+
+  const handleDelete = async()=>{
+    const res = await deleteSchedule(scheduleId)
+    if(res.deletedCount >0){
+      toast.success('Schedule deleted successfully..')
+      router.push('/dashboard/doctor/schedule')
     }
   }
   return (
@@ -159,7 +167,7 @@ const scheduleId = schedule._id
             </div>
             <div className="cursor-pointer border border-accent p-2 rounded-lg hover:bg-accent/50">
 
-            <RiDeleteBin6Line className="cursor-pointer"></RiDeleteBin6Line>
+            <RiDeleteBin6Line onClick={handleDelete} className="cursor-pointer"></RiDeleteBin6Line>
             </div>
           </div>
         </div>
