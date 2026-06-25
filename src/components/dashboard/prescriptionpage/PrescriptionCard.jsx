@@ -1,12 +1,22 @@
+'use client'
 import { Button, Card, Table } from '@heroui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { RiFileTextLine } from 'react-icons/ri';
+import EditCard from './EditCard';
 
 const PrescriptionCard = ({prescription}) => {
+  const [open, setOpen] = useState(false)
+  const handleEdit = ()=>{
+    setOpen(true)
+  }
     return (
+      <>
+      {open &&(
+        <EditCard prescription={prescription}></EditCard>
+      )}
         <Card className="w-full mt-6">
-        <div className="p-6 space-y-5">
+        <div className="p-3 space-y-3">
           {/* Header */}
           <div className="flex justify-between items-start">
             <div>
@@ -16,11 +26,11 @@ const PrescriptionCard = ({prescription}) => {
             </div>
 
             <div className="flex gap-2">
-              <Button isIconOnly variant="bordered">
+              <Button onClick={handleEdit} isIconOnly variant="outline" className={'bg-accent/10 text-foreground hover:bg-white'}>
                 <FiEdit2 size={18} />
               </Button>
 
-              <Button isIconOnly variant="bordered" color="danger">
+              <Button isIconOnly variant="outline" color="danger" className={'bg-accent/10 text-foreground hover:bg-white'}>
                 <FiTrash2 size={18} />
               </Button>
             </div>
@@ -28,13 +38,13 @@ const PrescriptionCard = ({prescription}) => {
 
           {/* Medicine Table */}
           <div className="rounded-xl overflow-hidden border">
-            <Table>
+            <Table className='p-0 rounded-xl'>
               <Table.ScrollContainer>
                 <Table.Content
                   aria-label="Team members"
-                  className="min-w-[600px]"
+                  className=""
                 >
-                  <Table.Header className={"bg-accent/30 text-foreground"}>
+                  <Table.Header className={"bg-accent/10 text-foreground rounded-xl"}>
                     <Table.Column isRowHeader>Medicine</Table.Column>
                     <Table.Column className={'text-center'}>Dosage</Table.Column>
                     <Table.Column className={'text-center'}>Duration</Table.Column>
@@ -52,12 +62,13 @@ const PrescriptionCard = ({prescription}) => {
           </div>
 
           {/* Notes */}
-          <div className="bg-accent/30 rounded-xl p-3 flex items-center gap-2">
+          <div className="bg-accent/10 rounded-xl p-3 flex items-center gap-2">
             <RiFileTextLine size={18} />
-            <span>Nothing</span>
+            <span>{prescription.Notes}</span>
           </div>
         </div>
       </Card>
+      </>
     );
 };
 

@@ -26,7 +26,7 @@ const AddPrescription = ({ user }) => {
   };
   return (
     <div className="">
-        <Button className={'mt-3'} onClick={()=> setOpen(true)}>Add Prescription</Button>
+        <Button className={`mt-3 ${open ? 'hidden' : 'block'}`} onClick={()=> setOpen(true)}>Add Prescription</Button>
       {open &&(
         <Card className="mt-10">
         <div className="flex items-center justify-between">
@@ -103,6 +103,7 @@ const AddPrescription = ({ user }) => {
               <TextArea
                 variant="secondary"
                 aria-label="Notes"
+                name="Notes"
                 className="h-20 w-full col-span-2"
                 placeholder="Additional notes for patient"
               />

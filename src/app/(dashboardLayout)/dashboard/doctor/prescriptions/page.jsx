@@ -10,7 +10,7 @@ const PrescriptionsPage = async() => {
   const doctorId = user?.id
   const prescriptions = await getDoctorPrescriptions(doctorId)
 
-  console.log(prescriptions, 'from rq');
+  // console.log(prescriptions, 'from rq');
 
   return (
     <div className="py-10 px-6">
@@ -21,7 +21,7 @@ const PrescriptionsPage = async() => {
 
       <AddPrescription user={user} />
 
-      <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {prescriptions && (
           prescriptions.slice().reverse().map(prescription => <PrescriptionCard key={prescription._id} prescription={prescription}/>)
         )}
