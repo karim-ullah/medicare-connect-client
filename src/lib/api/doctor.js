@@ -1,3 +1,4 @@
+'use server'
 import { serverFetch } from "../core/server"
 
 
@@ -13,4 +14,8 @@ export const getDoctorSchedules = async(doctorId)=>{
 
 export const getAppointmentRequests = async(doctorId)=>{
     return serverFetch(`/api/appointment-requests?doctorId=${doctorId}`)
+}
+
+export const getDoctorPrescriptions = async(doctorId)=>{
+    return serverFetch(`/api/get-doctor-prescriptions?doctorId=${doctorId}`)
 }

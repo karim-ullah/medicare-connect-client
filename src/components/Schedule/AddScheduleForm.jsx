@@ -1,5 +1,4 @@
-"use clinet";
-import { getDoctor } from "@/lib/api/doctor";
+"use client";
 import { addDoctorSchedule } from "@/lib/doctor/action";
 import {
   Button,
@@ -10,11 +9,13 @@ import {
   TextField,
   Select,
 } from "@heroui/react";
-import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
 
 const AddScheduleForm = ({ user, setScheduleOpen, doctor }) => {
+
+const router = useRouter()
 
 const daySlots = doctor.daySlots
 const timeSlots = doctor.timeSlots
@@ -43,8 +44,8 @@ const timeSlots = doctor.timeSlots
     const res = await addDoctorSchedule(formData);
     console.log(res);
     if (res.insertedId) {
-      alert("added");
-      window.location.href ='/dashboard/doctor/schedule'
+      toast.success('Schedule added...')
+      router.push('/dashboard/doctor/schedule')
     }
   };
 

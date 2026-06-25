@@ -7,8 +7,10 @@ import { BsCheckCircle } from "react-icons/bs";
 import { LuFileText } from "react-icons/lu";
 import { updateStatus } from "@/lib/doctor/appointment";
 import toast from "react-hot-toast";
+import Link from "next/link";
 const RequestCard = ({ appointment }) => {
   const appointmentId = appointment._id;
+
   const handleStatus = async (data) => {
     const status = {};
     status.status = data;
@@ -16,11 +18,18 @@ const RequestCard = ({ appointment }) => {
     console.log(res);
     if (res.modifiedCount > 0) {
       toast.success("Status changed successfully");
-      window.location.href = "/dashboard/doctor/appointment-requests";
+      if(data != 'Completed'){
+        
+        window.location.href = "/dashboard/doctor/appointment-requests";
+      }
     }
   };
   return (
-    <Card className="rounded-3xl p-4 mt-6">
+    <Card
+      className={`rounded-3xl p-4 mt-6 
+    ${appointment.status === "Completed" ? "hidden" : "block"}
+    `}
+    >
       <div className="flex items-center justify-between">
         {/* Left */}
         <div className="flex gap-5">
@@ -75,22 +84,31 @@ const RequestCard = ({ appointment }) => {
 
         {/* Right */}
         <div>
-          {appointment.status === 'Confirmed' || appointment.status === 'Completed' ? <Button onClick={()=> handleStatus('Completed')}>Mark as Complete and Prescripe</Button> : <div className="space-x-3">
-            <Button
-            onClick={() => handleStatus("Confirmed")}
-            variant="outline"
-            className="rounded-xl bg-background text-foreground"
-          >
-            Accept
-          </Button>
-          <Button
-            onClick={() => handleStatus("Rejected")}
-            variant="danger"
-            className="rounded-xl bg-accent/10 text-foreground"
-          >
-            Reject
-          </Button>
-            </div>}
+          {appointment.status === "Confirmed" ||
+          appointment.status === "Completed" ? (
+            <Button onClick={() => handleStatus("Completed")}>
+              <Link href={`/dashboard/doctor/prescriptions`}>
+                Mark as Complete and Prescripe
+              </Link>
+            </Button>
+          ) : (
+            <div className="space-x-3">
+              <Button
+                onClick={() => handleStatus("Confirmed")}
+                variant="outline"
+                className="rounded-xl bg-background text-foreground"
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={() => handleStatus("Rejected")}
+                variant="danger"
+                className="rounded-xl bg-accent/10 text-foreground"
+              >
+                Reject
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Card>

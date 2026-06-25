@@ -61,7 +61,7 @@ export default function Sidebar() {
 
     {
       label: "Prescriptions",
-      href: "/dashboard/overview",
+      href: "/dashboard/doctor/prescriptions",
       icon: <LuNewspaper size={18} />,
     },
     {

@@ -3,11 +3,7 @@ import OwnerWarning from "@/components/detailspage/OwnerWarning";
 import RightSide from "@/components/detailspage/RightSide";
 import { getSingleSchedule } from "@/lib/api/findallschedules";
 import { getUser } from "@/lib/core/session";
-import { Button, Card, Separator } from "@heroui/react";
-import Image from "next/image";
 import React from "react";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { MdOutlineFavoriteBorder, MdOutlineVerifiedUser } from "react-icons/md";
 
 const page = async ({ params }) => {
 

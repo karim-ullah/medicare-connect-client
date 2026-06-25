@@ -1,6 +1,7 @@
 "use client";
 import { updateSchedule } from "@/lib/doctor/action";
 import { Button, Card, Input, Label, ListBox , Select, TextField} from "@heroui/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FiEdit } from "react-icons/fi";
@@ -9,7 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 
 const MySchedulesCard = ({ schedule }) => {
 
-
+const router = useRouter()
 const daySlots = schedule.daySlots
 const timeSlots = schedule.timeSlots
 const scheduleId = schedule._id
@@ -29,7 +30,7 @@ const scheduleId = schedule._id
 
     if(res.modifiedCount > 0){
       toast.success('Schedule updated!')
-      window.location.href = '/dashboard/doctor/schedule'
+      router.push('/dashboard/doctor/schedule')
       
     }
   }
