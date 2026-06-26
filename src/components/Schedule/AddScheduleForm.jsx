@@ -14,13 +14,12 @@ import toast from "react-hot-toast";
 import { RxCross2 } from "react-icons/rx";
 
 const AddScheduleForm = ({ user, setScheduleOpen, doctor }) => {
+  const router = useRouter();
 
-const router = useRouter()
+  const daySlots = doctor.daySlots;
+  const timeSlots = doctor.timeSlots;
 
-const daySlots = doctor.daySlots
-const timeSlots = doctor.timeSlots
-
-// console.log(doctor.daySlots);
+  // console.log(doctor.daySlots);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,24 +32,23 @@ const timeSlots = doctor.timeSlots
     formData.fee = doctor.fee;
     formData.specialization = doctor.specialization;
     formData.experience = doctor?.experience;
-    formData.name = doctor.name
-    formData.email = doctor.email
-    formData.bio = doctor.bio
-    formData.qualifications = doctor.qualifications
-    formData.phone = doctor.phone
-    formData.daySlots = daySlots
-    formData.timeSlots = timeSlots
+    formData.name = doctor.name;
+    formData.email = doctor.email;
+    formData.bio = doctor.bio;
+    formData.qualifications = doctor.qualifications;
+    formData.phone = doctor.phone;
+    formData.daySlots = daySlots;
+    formData.timeSlots = timeSlots;
 
     const res = await addDoctorSchedule(formData);
     // console.log(res);
     if (res.insertedId) {
-      toast.success('Schedule added...')
-      router.push('/dashboard/doctor/schedule')
+      toast.success("Schedule added...");
+      setScheduleOpen(false)
+      router.push("/dashboard/doctor/schedule");
     }
   };
 
- 
-  
   return (
     <Card className="mt-10">
       <div className="flex items-center justify-between">
@@ -74,25 +72,13 @@ const timeSlots = doctor.timeSlots
                 <Select.Indicator />
               </Select.Trigger>
               <Select.Popover>
-
-               
-
                 <ListBox>
-
-                   {daySlots && (
-                  daySlots.map(slot => (
-                    
-                      <ListBox.Item id={slot} textValue={slot}>
+                  {daySlots &&
+                    daySlots.map((slot, index) => (
+                      <ListBox.Item key={index} id={slot} textValue={slot}>
                         {slot}
                       </ListBox.Item>
-                  
-                  ))
-                )}
-
-
-                
-
-
+                    ))}
                 </ListBox>
               </Select.Popover>
             </Select>
@@ -120,19 +106,12 @@ const timeSlots = doctor.timeSlots
               </Select.Trigger>
               <Select.Popover>
                 <ListBox>
-
-
-                  {timeSlots && (
-                  timeSlots.map(slot => (
-                    
-                      <ListBox.Item id={slot} textValue={slot}>
+                  {timeSlots &&
+                    timeSlots.map((slot, index) => (
+                      <ListBox.Item key={index} id={slot} textValue={slot}>
                         {slot}
                       </ListBox.Item>
-                  
-                  ))
-                )}
-
-
+                    ))}
                 </ListBox>
               </Select.Popover>
             </Select>
@@ -150,15 +129,12 @@ const timeSlots = doctor.timeSlots
               </Select.Trigger>
               <Select.Popover>
                 <ListBox>
-                  {timeSlots && (
-                  timeSlots.map(slot => (
-                    
-                      <ListBox.Item id={slot} textValue={slot}>
+                  {timeSlots &&
+                    timeSlots.map((slot, index) => (
+                      <ListBox.Item key={index} id={slot} textValue={slot}>
                         {slot}
                       </ListBox.Item>
-                  
-                  ))
-                )}
+                    ))}
                 </ListBox>
               </Select.Popover>
             </Select>

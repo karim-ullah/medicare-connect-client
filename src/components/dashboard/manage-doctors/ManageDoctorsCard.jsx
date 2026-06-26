@@ -1,7 +1,7 @@
 import { Avatar, Button, Card, Chip } from "@heroui/react";
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import { MdVerified } from "react-icons/md";
+import { MdPending, MdVerified } from "react-icons/md";
 import RevokeAlert from "./RevokeAlert";
 
 const ManageDoctorsCard = async ({ doctor }) => {
@@ -24,7 +24,7 @@ const ManageDoctorsCard = async ({ doctor }) => {
               <h2 className="text-xl font-bold">{doctor.name}</h2>
 
               <Chip color="success" variant="flat">
-                {doctor.status} <MdVerified />
+                {doctor.status} {doctor.status === 'verified'? <MdVerified /> : <MdPending/> }
               </Chip>
             </div>
 

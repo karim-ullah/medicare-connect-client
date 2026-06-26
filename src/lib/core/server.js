@@ -1,10 +1,12 @@
 import { baseUrl } from "../baseUrl";
 
-
-export const serverFetch = async(path)=>{
-    const res = await fetch(`${baseUrl}${path}`)
-    return res.json()
-}
+export const serverFetch = async (path) => {
+  const res = await fetch(`${baseUrl}${path}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
+};
 
 export const serverMutation = async (path, method, data) => {
   const res = await fetch(`${baseUrl}${path}`, {
@@ -15,5 +17,5 @@ export const serverMutation = async (path, method, data) => {
     body: JSON.stringify(data),
   });
 
-  return res.json()
+  return res.json();
 };

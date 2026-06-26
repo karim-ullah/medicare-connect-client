@@ -13,3 +13,9 @@ export const getDoctors = async()=>{
 export const updateStatus = async(doctorId, status)=>{
     return serverMutation(`/api/update-status-doctor?doctorId=${doctorId}`, 'PATCH', status)
 }
+
+// suspend user
+
+export const updateUserStatus = async(userId, role)=>{
+    return serverMutation(`/api/suspend-user?userId=${userId}`, 'PATCH', role)
+}

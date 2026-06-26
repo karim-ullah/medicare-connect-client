@@ -15,6 +15,8 @@ const daySlots = schedule.daySlots
 const timeSlots = schedule.timeSlots
 const scheduleId = schedule._id
 
+console.log(scheduleId, 'scheee');
+
 
   const [open, setOpen] = useState(false);
 
@@ -37,6 +39,7 @@ const scheduleId = schedule._id
 
   const handleDelete = async()=>{
     const res = await deleteSchedule(scheduleId)
+
     if(res.deletedCount >0){
       toast.success('Schedule deleted successfully..')
       router.push('/dashboard/doctor/schedule')

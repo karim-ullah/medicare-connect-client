@@ -1,4 +1,5 @@
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
+import UserTrow from "@/components/dashboard/manageuser/UserTrow";
 import { getUsers } from "@/lib/Actions/admin/actiions";
 import { Button, Table } from "@heroui/react";
 import React from "react";
@@ -25,20 +26,7 @@ const ManageUsers = async () => {
               </Table.Header>
               <Table.Body>
                 {users &&
-                  users.map((user) => {
-                    return (
-                      <Table.Row key={user._id}>
-                      <Table.Cell>{user.name}</Table.Cell>
-                      <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>{user.role}</Table.Cell>
-                      <Table.Cell>
-                        <Button>action</Button>
-                      </Table.Cell>
-                    </Table.Row>
-                    )
-                  })}
-
-               
+                  users.map((user) => <UserTrow key={user._id} user={user} />)}
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
