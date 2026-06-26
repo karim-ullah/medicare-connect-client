@@ -1,8 +1,11 @@
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
-import { Table } from "@heroui/react";
+import { getUsers } from "@/lib/Actions/admin/actiions";
+import { Button, Table } from "@heroui/react";
 import React from "react";
 
-const ManageUsers = () => {
+const ManageUsers = async () => {
+  const users = await getUsers();
+
   return (
     <div className="py-10 px-6">
       <DashboardHeading
@@ -13,7 +16,7 @@ const ManageUsers = () => {
       <div>
         <Table>
           <Table.ScrollContainer>
-            <Table.Content aria-label="Team members" className="min-w-[600px]">
+            <Table.Content aria-label="users" className="min-w-[600px]">
               <Table.Header>
                 <Table.Column isRowHeader>User</Table.Column>
                 <Table.Column>Contact</Table.Column>
@@ -21,30 +24,21 @@ const ManageUsers = () => {
                 <Table.Column>Actions</Table.Column>
               </Table.Header>
               <Table.Body>
-                <Table.Row>
-                  <Table.Cell>Kate Moore</Table.Cell>
-                  <Table.Cell>CEO</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                  <Table.Cell>kate@acme.com</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>John Smith</Table.Cell>
-                  <Table.Cell>CTO</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                  <Table.Cell>john@acme.com</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Sara Johnson</Table.Cell>
-                  <Table.Cell>CMO</Table.Cell>
-                  <Table.Cell>On Leave</Table.Cell>
-                  <Table.Cell>sara@acme.com</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell>Michael Brown</Table.Cell>
-                  <Table.Cell>CFO</Table.Cell>
-                  <Table.Cell>Active</Table.Cell>
-                  <Table.Cell>michael@acme.com</Table.Cell>
-                </Table.Row>
+                {users &&
+                  users.map((user) => {
+                    return (
+                      <Table.Row key={user._id}>
+                      <Table.Cell>{user.name}</Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell>{user.role}</Table.Cell>
+                      <Table.Cell>
+                        <Button>action</Button>
+                      </Table.Cell>
+                    </Table.Row>
+                    )
+                  })}
+
+               
               </Table.Body>
             </Table.Content>
           </Table.ScrollContainer>
