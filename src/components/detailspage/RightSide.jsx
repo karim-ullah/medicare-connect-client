@@ -24,6 +24,8 @@ const RightSide = ({ schedule, user }) => {
   const patientId = user?.id
   const patientName = user?.name
   const doctorId = schedule.doctorId
+  const doctorName = schedule.name
+  const specialization = schedule.specialization
   const appointmentDate = selectedDay
   const appointmentTime = selectedTime
   const paymentStatus = 'Paid'
@@ -34,6 +36,8 @@ const RightSide = ({ schedule, user }) => {
     patientId,
     patientName,
     doctorId,
+    doctorName,
+    specialization,
     appointmentDate,
     appointmentTime,
     paymentStatus,

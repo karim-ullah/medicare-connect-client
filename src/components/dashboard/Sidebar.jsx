@@ -22,17 +22,17 @@ export default function Sidebar() {
   const patient = [
     {
       label: "Overview",
-      href: "/dashboard/overview",
+      href: "/dashboard/patient",
       icon: <FiHome size={18} />,
     },
     {
       label: "My Appointments",
-      href: "/dashboard/my-appointments",
+      href: "/dashboard/patient/my-appointments",
       icon: <FiUser size={18} />,
     },
     {
       label: "Payment History",
-      href: "/dashboard/payment-history",
+      href: "/dashboard/patient/payment-history",
       icon: <FiCalendar size={18} />,
     },
     {
