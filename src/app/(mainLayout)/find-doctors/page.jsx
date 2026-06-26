@@ -6,7 +6,7 @@ import React from "react";
 
 const FindDoctorsPage = async () => {
   const schedules = await getAllSchedules();
-  console.log(schedules);
+  // console.log(schedules);
   return (
     <div className="container py-10">
       {/* haeading */}

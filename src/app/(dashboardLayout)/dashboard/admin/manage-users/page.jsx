@@ -13,7 +13,7 @@ const ManageUsers = async () => {
         description={"View, suspend, or remove registered patients"}
       />
 
-      <div>
+      <div className="mt-3">
         <Table>
           <Table.ScrollContainer>
             <Table.Content aria-label="users" className="min-w-[600px]">
