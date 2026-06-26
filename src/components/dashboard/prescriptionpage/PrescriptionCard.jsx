@@ -4,16 +4,30 @@ import React, { useState } from 'react';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { RiFileTextLine } from 'react-icons/ri';
 import EditCard from './EditCard';
+import { deletePrescription } from '@/lib/doctor/action';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const PrescriptionCard = ({prescription}) => {
+  const router = useRouter()
+  const prescriptionId = prescription._id
   const [open, setOpen] = useState(false)
   const handleEdit = ()=>{
     setOpen(true)
   }
+
+  const handleDelete =async()=>{
+    const res = await deletePrescription(prescriptionId)
+    if(res.deletedCount > 0){
+      toast.success('prescription deleted successfully')
+      router.refresh()
+
+    }
+  }
     return (
       <>
       {open &&(
-        <EditCard prescription={prescription}></EditCard>
+        <EditCard prescription={prescription} setOpen = {setOpen}></EditCard>
       )}
         <Card className="w-full mt-6">
         <div className="p-3 space-y-3">
@@ -30,7 +44,7 @@ const PrescriptionCard = ({prescription}) => {
                 <FiEdit2 size={18} />
               </Button>
 
-              <Button isIconOnly variant="outline" color="danger" className={'bg-accent/10 text-foreground hover:bg-white'}>
+              <Button onClick={handleDelete} isIconOnly variant="outline" color="danger" className={'bg-accent/10 text-foreground hover:bg-white'}>
                 <FiTrash2 size={18} />
               </Button>
             </div>

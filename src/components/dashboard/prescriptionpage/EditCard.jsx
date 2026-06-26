@@ -6,7 +6,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { RxCross2 } from 'react-icons/rx';
 
-const EditCard = ({prescription}) => {
+const EditCard = ({prescription, setOpen}) => {
     const router = useRouter()
     const prescriptionId = prescription._id
     const onSubmit = async(e)=>{
@@ -16,6 +16,7 @@ const EditCard = ({prescription}) => {
         const res = await updatePrescription(prescriptionId, formData)
         if(res.modifiedCount >0){
             toast.success('Prescription edited')
+            setOpen(false)
             router.refresh()
         }
     }

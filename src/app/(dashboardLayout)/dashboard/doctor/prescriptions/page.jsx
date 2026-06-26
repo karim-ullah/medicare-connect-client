@@ -23,7 +23,7 @@ const PrescriptionsPage = async() => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {prescriptions && (
-          prescriptions.slice().reverse().map(prescription => <PrescriptionCard key={prescription._id} prescription={prescription}/>)
+          prescriptions.map(prescription => <PrescriptionCard key={prescription._id} prescription={prescription}/>)
         )}
       </div>
 

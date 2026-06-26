@@ -21,6 +21,7 @@ const AddPrescription = ({ user }) => {
     const res = await addPrescription(formData);
     if (res.insertedId) {
       toast.success("Prescription added..");
+      setOpen(false)
       router.refresh();
     }
   };
