@@ -1,14 +1,20 @@
-'use client'
-import { authClient } from "@/lib/auth-client";
+import { getAppointmentRequests } from "@/lib/api/doctor";
+import { getUser } from "@/lib/core/session";
 import { Card, Chip } from "@heroui/react";
+import Link from "next/link";
 import React from "react";
 import { FaHistory } from "react-icons/fa";
 import { FiArrowRight, FiClock, FiUsers } from "react-icons/fi";
 import { MdOutlineReviews } from "react-icons/md";
 
-const DoctorPage = () => {
-    const { data: session } = authClient.useSession();
-      const user = session?.user;
+const DoctorPage = async() => {
+
+  const user = await getUser()
+  const doctorId = user?.id
+  const totalPatients = await getAppointmentRequests(doctorId)
+  const latestAppointment = totalPatients.at(-1)
+ 
+  
   return (
     <div className="py-10 px-6">
         
@@ -18,14 +24,14 @@ const DoctorPage = () => {
       </p>
 
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 py-6">
-        {/* Total Patient */}
+        {/* Total Patients */}
         <div className="rounded-2xl border bg-background p-4 shadow transition-all hover:-translate-y-1 hover:shadow-lg">
           <div className="flex flex-col items-center justify-center text-center">
             <div className="rounded-xl bg-primary/10 p-3 text-primary">
               <FiUsers size={24} />
             </div>
             <div>
-              <h3 className="mt-2 text-3xl font-bold">5</h3>
+              <h3 className="mt-2 text-3xl font-bold">{totalPatients.length}</h3>
               <p className="text-sm text-default-500">Total patient</p>
             </div>
           </div>
@@ -38,8 +44,8 @@ const DoctorPage = () => {
               <FaHistory size={24} />
             </div>
             <div>
-              <h3 className="mt-2 text-3xl font-bold">24</h3>
-              <p className="text-sm text-default-500">Today's Appointments</p>
+              <h3 className="mt-2 text-3xl font-bold">1</h3>
+              <p className="text-sm text-default-500">Latest Appointments</p>
             </div>
           </div>
         </div>
@@ -59,14 +65,14 @@ const DoctorPage = () => {
       </div>
 
       <div>
-        <Card className="rounded-3xl p-6">
-        <div className="mb-3 flex items-center justify-between">
+        <Card className="rounded-3xl">
+        <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">
-            Today's Appointments
+            Latest Appointments
           </h2>
 
           <button className="flex items-center gap-2 text-primary font-medium">
-            View all <FiArrowRight />
+            <Link className="flex items-center gap-2 text-sm" href={'/dashboard/doctor/appointment-requests'}>View all <FiArrowRight /></Link>
           </button>
         </div>
 
@@ -79,18 +85,18 @@ const DoctorPage = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold">
-                  Alice Johnson
+                <h3 className="text-lg font-semibold">
+                  {latestAppointment.doctorName}
                 </h3>
 
                 <p className="text-default-500">
-                  2026-06-20 at 10:00 AM
+                  {latestAppointment.appointmentDate} at {latestAppointment.appointmentTime}
                 </p>
               </div>
             </div>
 
             <Chip color="success" variant="flat">
-              Confirmed
+              {latestAppointment.status}
             </Chip>
           </div>
         </div>

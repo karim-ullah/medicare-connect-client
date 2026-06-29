@@ -1,9 +1,16 @@
+import Hero from "@/components/HomePage/Hero";
+import Specializations from "@/components/HomePage/MedicalSpecial";
+import StatsSection from "@/components/HomePage/TrustedByThousand";
+import WhyChooseUs from "@/components/HomePage/WhyChoiceUs";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="container flex flex-col flex-1 items-center justify-center">
-      this is homepage
+    <div className="">
+      <Hero/>
+      <Specializations/>
+      <StatsSection/>
+      <WhyChooseUs/>
     </div>
   );
 }

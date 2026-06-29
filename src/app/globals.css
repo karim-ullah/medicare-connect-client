@@ -1,18 +1,15 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 
 :root {
   --background: #feffff;
   --foreground: #080c16;
-    --accent: #0369A1;
-
+  --accent: #0369a1;
 }
 
-.dark{
-
+.dark {
   --background: #080c16;
   --foreground: #ffffff;
-  
 }
 
 @layer components {
@@ -24,14 +21,11 @@
     @apply max-w-7xl px-3 mx-auto;
   }
 
-  .text-primary{
+  .text-primary {
     @apply text-[#4089b0];
   }
 
-  .text-secondary{
+  .text-secondary {
     @apply text-gray-300;
   }
-
-  
 }
-

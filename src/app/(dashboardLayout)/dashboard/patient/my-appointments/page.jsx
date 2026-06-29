@@ -3,13 +3,12 @@ import MyAppointmentCard from "@/components/dashboard/my-appointmentPatient/MyAp
 import { getMyAppointments } from "@/lib/Actions/patient/action";
 import { getUser } from "@/lib/core/session";
 
-
-const MyAppointmentsPage = async() => {
-    const user = await getUser()
-    const patientId = user?.id
-    console.log(patientId);
-    const myAppointments = await getMyAppointments(patientId)
-    console.log(myAppointments, 'hello');
+const MyAppointmentsPage = async () => {
+  const user = await getUser();
+  const patientId = user?.id;
+  // console.log(patientId);
+  const myAppointments = await getMyAppointments(patientId);
+  // console.log(myAppointments, "hello");
   return (
     <div className="py-10 px-6">
       <DashboardHeading
@@ -18,12 +17,14 @@ const MyAppointmentsPage = async() => {
       />
 
       <div>
-        {myAppointments && (
-            myAppointments.map(appointment => <MyAppointmentCard key={appointment._id} appointment={appointment}/>)
-        )}
+        {myAppointments &&
+          myAppointments.map((appointment) => (
+            <MyAppointmentCard
+              key={appointment._id}
+              appointment={appointment}
+            />
+          ))}
       </div>
-
-     
     </div>
   );
 };

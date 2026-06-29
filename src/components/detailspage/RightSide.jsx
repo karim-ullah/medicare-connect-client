@@ -42,12 +42,29 @@ const RightSide = ({ schedule, user }) => {
     appointmentTime,
     paymentStatus,
     status,
-    totalFee,
+    price: totalFee,
   }
 
+
+
   const handleAppointmentSubmit = async()=>{
-    const res = await createAppointment(appointmentData)
-    console.log(res);
+    const res = await fetch("/api/checkout_sessions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(appointmentData),
+  });
+
+  const session = await res.json();
+  console.log(session, 'details page');
+  window.location.href = session.url;
+
+  
+
+
+    // const res = await createAppointment(appointmentData)
+    // console.log(res);
   }
 
   return (
@@ -159,6 +176,7 @@ const RightSide = ({ schedule, user }) => {
 
         {/* Book Button */}
         <Button
+        type="button"
         onClick={handleAppointmentSubmit}
           size="lg"
           color="primary"
