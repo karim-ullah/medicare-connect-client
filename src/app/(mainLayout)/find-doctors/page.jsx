@@ -9,6 +9,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
   // console.log(sParams);
   const search = sParams.search || "";
   const specialization = sParams.specialization || "";
+  const sortBy = sParams.sortBy || "";
 
   const params = new URLSearchParams();
   if (search) {
@@ -16,6 +17,9 @@ const FindDoctorsPage = async ({ searchParams }) => {
   }
   if (specialization) {
     params.set("specialization", specialization);
+  }
+  if(sortBy){
+    params.set('sortBy', sortBy)
   }
   const schedules = await getSchedules(params);
   return (
@@ -36,7 +40,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
       {/* card */}
 
       <div className="mt-6">
-        <p className="text-primary text-lg">
+        <p className="text-foreground text-sm">
           showing {schedules.length} doctors
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">

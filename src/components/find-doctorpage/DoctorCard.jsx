@@ -28,7 +28,7 @@ const DoctorCard = ({schedule}) => {
                 Dr. {schedule.name}
               </h3>
 
-              <p className="text-sm font-medium text-primary">Cardiologist</p>
+              <p className="text-sm font-medium text-primary">{schedule.specialization}</p>
 
               <p className="mt-1 text-sm text-default-500">
                 {schedule.hospital}
@@ -57,7 +57,7 @@ const DoctorCard = ({schedule}) => {
             {/* Stats */}
             <div className="flex items-center justify-between mt-2">
               <div className="flex gap-3 items-center">
-                <p className="font-normal flex items-center gap-1"><MdOutlineSchedule/> 14yrs</p>
+                <p className="font-normal flex items-center gap-1"><MdOutlineSchedule/> {schedule.experience}yrs</p>
                 <p className="font-normal flex items-center gap-1"><FiUser/> 2344+</p>
               </div>
 
