@@ -6,6 +6,7 @@ export const getSchedules = async(query)=>{
 }
 
 
+
 export const getSingleSchedule = async(scheduleId)=>{
     return serverFetch(`/api/single-schedule?scheduleId=${scheduleId}`)
 }

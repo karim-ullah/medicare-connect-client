@@ -14,7 +14,7 @@ const RightSide = ({ schedule, user }) => {
 
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  console.log(selectedDay, selectedTime);
+  // console.log(selectedDay, selectedTime);
 
   const daySlots = schedule.daySlots;
   const timeSlots = schedule.timeSlots;
@@ -57,7 +57,7 @@ const RightSide = ({ schedule, user }) => {
   });
 
   const session = await res.json();
-  console.log(session, 'details page');
+  // console.log(session, 'details page');
   window.location.href = session.url;
 
   

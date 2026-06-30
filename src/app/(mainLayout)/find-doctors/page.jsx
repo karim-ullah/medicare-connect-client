@@ -1,15 +1,16 @@
 import DoctorCard from "@/components/find-doctorpage/DoctorCard";
+import PaginationPart from "@/components/find-doctorpage/Pagination";
 import SearchFilterPanel from "@/components/find-doctorpage/SearchFilterPanel";
 import { getSchedules } from "@/lib/api/findallschedules";
-import Image from "next/image";
 import React from "react";
 
 const FindDoctorsPage = async ({ searchParams }) => {
   const sParams = await searchParams;
-  // console.log(sParams);
+  console.log(sParams);
   const search = sParams.search || "";
   const specialization = sParams.specialization || "";
   const sortBy = sParams.sortBy || "";
+  const page = sParams.page
 
   const params = new URLSearchParams();
   if (search) {
@@ -21,7 +22,15 @@ const FindDoctorsPage = async ({ searchParams }) => {
   if(sortBy){
     params.set('sortBy', sortBy)
   }
-  const schedules = await getSchedules(params);
+  if(page){
+    params.set('page', page)
+  }
+  const data = await getSchedules(params);
+  const schedules = data.schedules
+  
+
+
+  // console.log(data);
   return (
     <div className="container py-10">
       {/* haeading */}
@@ -49,6 +58,9 @@ const FindDoctorsPage = async ({ searchParams }) => {
               <DoctorCard key={schedule._id} schedule={schedule}></DoctorCard>
             ))}
         </div>
+
+
+        <PaginationPart data={data}/>
       </div>
     </div>
   );

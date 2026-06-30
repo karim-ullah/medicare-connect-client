@@ -15,7 +15,7 @@ const daySlots = schedule.daySlots
 const timeSlots = schedule.timeSlots
 const scheduleId = schedule._id
 
-console.log(scheduleId, 'scheee');
+// console.log(scheduleId, 'scheee');
 
 
   const [open, setOpen] = useState(false);

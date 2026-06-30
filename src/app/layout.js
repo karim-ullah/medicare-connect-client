@@ -1,3 +1,6 @@
+import dns from "node:dns"
+dns.setServers(['1.1.1.1', '1.0.0.1']);
+
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
@@ -29,6 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      data-theme = 'light'
       className={`${inter.className} h-full antialiased`}
     >
       <body className="min-h-full">

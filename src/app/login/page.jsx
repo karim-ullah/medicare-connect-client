@@ -1,6 +1,7 @@
 'use client'
 import { authClient } from '@/lib/auth-client';
-import { Button, Card, Description, FieldError, Form, Input, Label, Spinner, TextField } from '@heroui/react';
+import { Button, Card, Description, FieldError, Form, Input, Label, Separator, Spinner, TextField } from '@heroui/react';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -41,7 +42,7 @@ const LoginPage = () => {
                   <Card>
                     <div>
                       <h3 className="text-center font-semibold text-2xl text-accent">
-                        Register Account
+                        Login Account
                       </h3>
                     </div>
                     <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
@@ -113,7 +114,12 @@ const LoginPage = () => {
                         </Button>
                       </div>
                     </Form>
+
+                    <div className='text-center font-mono text-lg'>
+                      <p>Not have an account? <Link className=' border-b border-blue-300 hover:border-b-2' href={'/register'}>Register</Link></p>
+                    </div>
                   </Card>
+
                 </div>
         </div>
     );

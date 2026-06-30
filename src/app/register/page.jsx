@@ -14,6 +14,7 @@ import {
   ListBox,
   Spinner,
 } from "@heroui/react";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -202,6 +203,10 @@ const RegisterPage = () => {
             </Button>
           </div>
         </Form>
+
+        <div className='text-center font-mono text-lg'>
+                      <p>Already have an account? <Link className=' border-b border-blue-300 hover:border-b-2' href={'/login'}>Login</Link></p>
+                    </div>
       </Card>
     </div>
   );

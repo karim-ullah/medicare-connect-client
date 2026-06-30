@@ -12,13 +12,13 @@ const page = async ({ params }) => {
   // console.log(user);
   const schedule = await getSingleSchedule(scheduleId);
 
-  const isOwner = user?.id === schedule.doctorId
+  const isOwner = user?.id === schedule?.doctorId
 
   
 
   // console.log(schedule, 'details page');
   return (
-    <div className="container py-10 flex gap-4">
+    <div className="container py-10 flex flex-col md:flex-row gap-4">
       {/* left side */}
 
       <LeftSide schedule={schedule}/>

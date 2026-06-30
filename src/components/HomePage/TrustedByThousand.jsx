@@ -87,7 +87,7 @@ export default function StatsSection() {
 
                 {/* Number */}
 
-                <h3 className="mt-8 text-4xl font-extrabold text-white">
+                <h3 className="mt-8 text-3xl md:text-4xl font-extrabold text-white">
                   {item.value}
                 </h3>
 

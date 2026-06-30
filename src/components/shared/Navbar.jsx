@@ -77,7 +77,7 @@ const Navbar = () => {
   return (
     
       <nav className="sticky top-0 z-40 border-b border-separator bg-background/70 backdrop-blur-lg">
-        <header className="relative container flex h-14 items-center justify-between">
+        <header className="relative container flex h-14 items-center justify-between gap-2">
           <div className="flex items-center gap-4">
             <button
               className="md:hidden"
@@ -111,7 +111,7 @@ const Navbar = () => {
             <div>
               <h3 className="font-bold">
                 <span className="text-[#0369A1] text-xl">MediCare</span>
-                <span className="text-primary">Connect</span>
+                <span className="text-xs md:text-sm text-foreground font-light md:font-medium">Connect</span>
               </h3>
             </div>
           </div>
@@ -123,7 +123,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div
               onClick={handleDashboard}
-              className="cursor-pointer flex items-center gap-1.5 bg-gray-200 px-3 py-1 rounded-xl hover:border"
+              className="cursor-pointer flex items-center gap-1.5 border border-accent px-3 py-1 rounded-xl hover:border"
             >
               <Avatar size="sm">
                 <Avatar.Image alt={user?.name} src={user?.image} />
@@ -137,7 +137,7 @@ const Navbar = () => {
               </Avatar>
               <div className="flex flex-col">
                 <span className="font-medium capitalize">{user?.name}</span>
-                <span className="text-sm font-mono text-primary -mt-2">
+                <span className="text-sm font-mono text-primary -mt-1">
                   {user?.role}
                 </span>
               </div>
@@ -171,10 +171,13 @@ const Navbar = () => {
 
           {/* Menu Items */}
           <div className="p-2">
+            <Link className="cursor-pointer" href={`/dashboard/${role}/profile`}>
+            
             <button className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-danger/10">
               <FiUser className="text-default-500" />
               <span className="font-mono">My Profile</span>
             </button>
+            </Link>
 
             <button className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-danger/10">
               <RiDashboardLine className="text-default-500" />

@@ -5,7 +5,7 @@ import { MdOutlineFavoriteBorder, MdOutlineVerifiedUser } from 'react-icons/md';
 
 const LeftSide = ({schedule}) => {
     return (
-        <div className="lg:col-span-2 space-y-6 w-3xl">
+        <div className="lg:col-span-2 space-y-6 w-full md:w-3xl">
                 {/* Profile Card */}
                 <Card className="overflow-hidden p-0">
                   {/* Cover */}
