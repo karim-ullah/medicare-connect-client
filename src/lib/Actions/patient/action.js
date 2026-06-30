@@ -18,6 +18,10 @@ export const getMyPayments = async(patientId)=>{
 }
 
 
+export const getTotalPayment = async(patientId)=>{
+    return serverFetch(`/api/get-total-payment?patientId=${patientId}`)
+}
+
 export const deleteAppointment = async(appointmentId)=>{
     return serverMutation(`/api/delete-appointment?appointmentId=${appointmentId}`, 'DELETE')
 }

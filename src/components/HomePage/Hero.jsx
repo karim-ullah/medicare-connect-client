@@ -1,5 +1,6 @@
 import Reveal from "@/Animation/Reveal";
 import { Button } from "@heroui/react";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -51,11 +52,17 @@ const Hero = () => {
 
             <div className="mt-10 flex flex-wrap gap-5">
               <Button className="rounded-xl px-8 py-4 font-semibold text-white shadow-xl transition hover:scale-105 hover:bg-cyan-400">
+                <Link href={'/find-doctors'}>
+                
                 Find Doctor →
+                </Link>
               </Button>
 
               <Button className="rounded-xl border border-white/20 bg-white/5 px-8 py-4 text-white backdrop-blur-md transition hover:bg-white/10">
+                <Link href={'/find-doctors'}>
+                
                 Book Appointment
+                </Link>
               </Button>
             </div>
           </div>

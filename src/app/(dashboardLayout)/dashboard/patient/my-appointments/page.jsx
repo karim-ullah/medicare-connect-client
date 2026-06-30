@@ -6,9 +6,7 @@ import { getUser } from "@/lib/core/session";
 const MyAppointmentsPage = async () => {
   const user = await getUser();
   const patientId = user?.id;
-  // console.log(patientId);
   const myAppointments = await getMyAppointments(patientId);
-  // console.log(myAppointments, "hello");
   return (
     <div className="py-10 px-6">
       <DashboardHeading

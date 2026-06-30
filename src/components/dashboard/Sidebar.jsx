@@ -109,7 +109,7 @@ export default function Sidebar() {
     };
   return (
 
-    <>
+    <div className="min-h-screen">
 
     <Drawer>
       <Button variant="secondary" className={'block md:hidden mt-10 bg-background'}>
@@ -150,8 +150,10 @@ export default function Sidebar() {
       </Drawer.Backdrop>
     </Drawer>
     
-    <aside className="min-h-screen w-64 border-r bg-background flex flex-col hidden md:block">
-      <div className="border-b p-6">
+    <aside className="min-h-screen w-64 border-r bg-background hidden md:block">
+      <div className="flex flex-col">
+        
+        <div className="border-b p-6">
         <h2 className="text-xl font-bold"><Link href={'/'}>Medicare Connect</Link></h2>
       </div>
 
@@ -202,7 +204,8 @@ export default function Sidebar() {
       <div className="border-t px-3 py-6">
         <Button onClick={handleLogOut} fullWidth>Logout</Button>
       </div>
+      </div>
     </aside>
-    </>
+    </div>
   );
 }
