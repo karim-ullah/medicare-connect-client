@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/Animation/Reveal";
 import { BiHeart } from "react-icons/bi";
 import { FaBaby, FaBone, FaBrain, FaLaptopMedical, FaMicroscope } from "react-icons/fa";
 
@@ -59,6 +60,8 @@ const specializations = [
 export default function Specializations() {
   return (
     <section className="py-16">
+      <Reveal>
+
       <div className="container">
 
         {/* Heading */}
@@ -115,6 +118,7 @@ export default function Specializations() {
           })}
         </div>
       </div>
+      </Reveal>
     </section>
   );
 }

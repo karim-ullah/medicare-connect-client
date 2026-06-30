@@ -1,3 +1,4 @@
+import Reveal from '@/Animation/Reveal';
 import { Button } from '@heroui/react';
 import Link from 'next/link';
 import React from 'react';
@@ -6,6 +7,11 @@ import { MdOutlineSchedule } from 'react-icons/md';
 
 const DoctorCard = ({schedule}) => {
     return (
+
+      <>
+
+      <Reveal>
+
         <div className="w-full overflow-hidden rounded-3xl border border-default-200 bg-background shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
           {/* Image */}
           <div className="relative h-60 overflow-hidden">
@@ -74,6 +80,9 @@ const DoctorCard = ({schedule}) => {
             </Button>
           </div>
         </div>
+      </Reveal>
+      
+      </>
     );
 };
 

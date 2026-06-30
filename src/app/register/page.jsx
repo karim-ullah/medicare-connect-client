@@ -70,7 +70,7 @@ const RegisterPage = () => {
         toast.error(error.message);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     } finally {
       setIsLoading(false);
     }

@@ -1,10 +1,17 @@
+import Reveal from "@/Animation/Reveal";
 import { Button } from "@heroui/react";
 import React from "react";
 
 const Hero = () => {
   return (
+
+    <>
+    <Reveal>
+
     <section className="relative isolate overflow-hidden max-h-fit flex items-center py-16 w-full">
       {/* Background */}
+
+
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=1600&h=900&fit=crop&auto=format"
@@ -51,15 +58,12 @@ const Hero = () => {
                 Book Appointment
               </Button>
             </div>
-
-           
           </div>
 
           {/* RIGHT */}
 
           <div className="hidden lg:flex justify-center relative">
             <div className="grid grid-cols-2 gap-y-20 gap-x-10">
-
               {/* Floating Card */}
 
               <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
@@ -89,6 +93,8 @@ const Hero = () => {
         </div>
       </div>
     </section>
+    </Reveal>
+    </>
   );
 };
 

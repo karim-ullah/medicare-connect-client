@@ -3,16 +3,19 @@ import DoctorCard from "../find-doctorpage/DoctorCard";
 import { getSchedules } from "@/lib/api/findallschedules";
 import Link from "next/link";
 import { GrFormNextLink } from "react-icons/gr";
+import Reveal from "@/Animation/Reveal";
 
 const FeaturedDoctor = async() => {
     const data = await getSchedules()
 
     const schedules = data.schedules
 
-    console.log(schedules);
+    // console.log(schedules);
 
   return (
     <div className="py-16 container">
+      <Reveal>
+
       <div className="flex justify-between items-center">
         <div className="max-w-[75%]"><h2 className="font-bold text-3xl md:text-4xl">Meet Our Expert Doctors</h2>
         <p className="text-primary text-lg leading-6">
@@ -30,6 +33,7 @@ const FeaturedDoctor = async() => {
             
         }
       </div>
+      </Reveal>
     </div>
   );
 };

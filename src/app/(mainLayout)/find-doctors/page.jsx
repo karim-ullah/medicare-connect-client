@@ -1,3 +1,4 @@
+import Reveal from "@/Animation/Reveal";
 import DoctorCard from "@/components/find-doctorpage/DoctorCard";
 import PaginationPart from "@/components/find-doctorpage/Pagination";
 import SearchFilterPanel from "@/components/find-doctorpage/SearchFilterPanel";
@@ -10,7 +11,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
   const search = sParams.search || "";
   const specialization = sParams.specialization || "";
   const sortBy = sParams.sortBy || "";
-  const page = sParams.page
+  const page = sParams.page;
 
   const params = new URLSearchParams();
   if (search) {
@@ -19,39 +20,43 @@ const FindDoctorsPage = async ({ searchParams }) => {
   if (specialization) {
     params.set("specialization", specialization);
   }
-  if(sortBy){
-    params.set('sortBy', sortBy)
+  if (sortBy) {
+    params.set("sortBy", sortBy);
   }
-  if(page){
-    params.set('page', page)
+  if (page) {
+    params.set("page", page);
   }
   const data = await getSchedules(params);
-  const schedules = data.schedules
-  
-
+  const schedules = data.schedules;
 
   // console.log(data);
   return (
     <div className="container py-10">
       {/* haeading */}
-      <div>
-        <h2 className="font-bold text-4xl">Find the Right Doctor</h2>
-        <p className="text-primary text-lg">
-          Browse {schedules.length} verified specialists across{" "}
-          {schedules.length} specializations
-        </p>
-      </div>
+      <Reveal>
+        <div>
+          <h2 className="font-bold text-4xl">Find the Right Doctor</h2>
+          <p className="text-primary text-lg">
+            Browse {schedules.length} verified specialists across{" "}
+            {schedules.length} specializations
+          </p>
+        </div>
+      </Reveal>
 
       <div className="mt-6">
-        <SearchFilterPanel />
+        <Reveal>
+          <SearchFilterPanel />
+        </Reveal>
       </div>
 
       {/* card */}
 
       <div className="mt-6">
-        <p className="text-foreground text-sm">
-          showing {schedules.length} doctors
-        </p>
+        <Reveal>
+          <p className="text-foreground text-sm">
+            showing {schedules.length} doctors
+          </p>
+        </Reveal>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
           {schedules &&
             schedules.map((schedule) => (
@@ -59,8 +64,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
             ))}
         </div>
 
-
-        <PaginationPart data={data}/>
+        <PaginationPart data={data} />
       </div>
     </div>
   );

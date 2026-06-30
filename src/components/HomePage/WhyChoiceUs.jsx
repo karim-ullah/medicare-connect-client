@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/Animation/Reveal";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { BiAward, BiCheckCircle, BiStar } from "react-icons/bi";
@@ -45,6 +46,8 @@ export default function WhyChooseUs() {
 
           <div>
 
+            <Reveal>
+
             <span className="uppercase tracking-widest text-sky-600 font-semibold text-sm">
               Why Medicare Connect
             </span>
@@ -58,6 +61,10 @@ export default function WhyChooseUs() {
               cutting-edge technology with compassionate care.
               Our platform puts you in control of your health journey.
             </p>
+            </Reveal>
+
+
+          <Reveal>
 
             <div className="mt-10 space-y-7">
 
@@ -94,7 +101,6 @@ export default function WhyChooseUs() {
                 );
               })}
             </div>
-
             <Button
               className="mt-10 inline-flex items-center gap-3
               rounded-xl px-7 py-4
@@ -104,10 +110,15 @@ export default function WhyChooseUs() {
               Get Started Free
               <BsArrowRight size={18} />
             </Button>
+          </Reveal>
+
+
 
           </div>
 
           {/* Right Side */}
+
+          <Reveal>
 
           <div className="relative flex justify-center">
 
@@ -170,6 +181,8 @@ export default function WhyChooseUs() {
             </div>
 
           </div>
+          </Reveal>
+
 
         </div>
 

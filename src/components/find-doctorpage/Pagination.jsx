@@ -11,7 +11,7 @@ const PaginationPart = ({data}) => {
   for(let i = 1 ; i<= totalPages; i++){
     pages.push(i)
   }
-  console.log(pages);
+  // console.log(pages);
   return (
     <div>
       <Table.Footer>

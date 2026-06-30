@@ -109,10 +109,13 @@ const Navbar = () => {
               </svg>
             </button>
             <div>
+
+              <Link href={'/'}>
               <h3 className="font-bold">
                 <span className="text-[#0369A1] text-xl">MediCare</span>
                 <span className="text-xs md:text-sm text-foreground font-light md:font-medium">Connect</span>
               </h3>
+              </Link>
             </div>
           </div>
 
@@ -123,7 +126,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div
               onClick={handleDashboard}
-              className="cursor-pointer flex items-center gap-1.5 border border-accent px-3 py-1 rounded-xl hover:border"
+              className="cursor-pointer flex items-center gap-1.5 border border-accent px-3 py-0 md:py-1 rounded-xl hover:border"
             >
               <Avatar size="sm">
                 <Avatar.Image alt={user?.name} src={user?.image} />
@@ -136,7 +139,7 @@ const Navbar = () => {
                 </Avatar.Fallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="font-medium capitalize">{user?.name}</span>
+                <span className="font-medium capitalize line-clamp-1 md:line-clamp-none">{user?.name}</span>
                 <span className="text-sm font-mono text-primary -mt-1">
                   {user?.role}
                 </span>

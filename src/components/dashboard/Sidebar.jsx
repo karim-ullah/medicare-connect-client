@@ -1,9 +1,11 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Avatar, Button } from "@heroui/react";
+import { Avatar, Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
+import { FaBars } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { FiHome, FiUser, FiCalendar, FiSettings } from "react-icons/fi";
 import { LuNewspaper } from "react-icons/lu";
@@ -100,9 +102,55 @@ export default function Sidebar() {
   ]
 
   const menuItems = role === 'patient' ? patient : role === 'doctor' ? doctor : admin
-
+   const handleLogOut = async () => {
+      await authClient.signOut();
+      toast.success("Logout successfully");
+      window.location.href = '/'
+    };
   return (
-    <aside className="min-h-screen w-64 border-r bg-background flex flex-col">
+
+    <>
+
+    <Drawer>
+      <Button variant="secondary" className={'block md:hidden mt-10 bg-background'}>
+        <FaBars />
+      
+      </Button>
+      <Drawer.Backdrop>
+        <Drawer.Content placement="left">
+          <Drawer.Dialog>
+            <Drawer.CloseTrigger />
+            <Drawer.Header>
+              <Drawer.Heading>Navigation</Drawer.Heading>
+            </Drawer.Header>
+            <Drawer.Body>
+              <nav className="flex flex-col gap-1">
+                <ul className="space-y-2 py-6">
+          {menuItems.map((item,index) => {
+            const isActive = pathName === item.href
+            return (
+              <li key={index}>
+              <Link
+                href={item.href}
+                className={`flex items-center justify-between gap-3 text-sm text-foreground ${isActive ? 'bg-accent/50' : ''}  rounded-xl py-2 px-2 transition hover:bg-accent/50`}
+              >
+                <div className="flex items-center gap-3">{item.icon}
+                <span>{item.label}</span></div>
+                {isActive && <MdKeyboardArrowRight/>}
+              </Link>
+              
+            </li>
+            )
+          })}
+        </ul>
+              </nav>
+            </Drawer.Body>
+          </Drawer.Dialog>
+        </Drawer.Content>
+      </Drawer.Backdrop>
+    </Drawer>
+    
+    <aside className="min-h-screen w-64 border-r bg-background flex flex-col hidden md:block">
       <div className="border-b p-6">
         <h2 className="text-xl font-bold"><Link href={'/'}>Medicare Connect</Link></h2>
       </div>
@@ -152,8 +200,9 @@ export default function Sidebar() {
       </nav>
 
       <div className="border-t px-3 py-6">
-        <Button fullWidth>Logout</Button>
+        <Button onClick={handleLogOut} fullWidth>Logout</Button>
       </div>
     </aside>
+    </>
   );
 }

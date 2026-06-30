@@ -1,5 +1,6 @@
 "use client";
 
+import Reveal from "@/Animation/Reveal";
 import { BiStar } from "react-icons/bi";
 import { FaStethoscope, FaUserSecret } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -31,6 +32,9 @@ const stats = [
 
 export default function StatsSection() {
   return (
+    <>
+    <Reveal>
+
     <section className="relative overflow-hidden bg-[#0D79B7] py-24">
 
       {/* Background Circles */}
@@ -105,5 +109,7 @@ export default function StatsSection() {
 
       </div>
     </section>
+    </Reveal>
+    </>
   );
 }

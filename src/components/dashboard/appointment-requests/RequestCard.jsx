@@ -15,7 +15,7 @@ const RequestCard = ({ appointment }) => {
     const status = {};
     status.status = data;
     const res = await updateStatus(appointmentId, status);
-    console.log(res);
+    // console.log(res);
     if (res.modifiedCount > 0) {
       toast.success("Status changed successfully");
       if(data != 'Completed'){
