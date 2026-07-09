@@ -22,13 +22,13 @@ https://medicare-connect-client-six.vercel.app/
 
 ## Environment Variables
 
-BETTER_AUTH_SECRET=your better auth secret
-BETTER_AUTH_URL=your localhost url
-MONGO_URI=mongodb+srv:your mongodb uri
-AUTH_DB_NAME=your database name
-NEXT_PUBLIC_IMGBB_API_KEY=your imgbb api key
-NEXT_PUBLIC_SERVER_URL=your server link
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your stripe key
-STRIPE_SECRET_KEY=your stripe secret key
-GOOGLE_CLIENT_ID=your google client id
-GOOGLE_CLIENT_SECRET=your google client secret
+- BETTER_AUTH_SECRET=your better auth secret
+- BETTER_AUTH_URL=your localhost url
+- MONGO_URI=mongodb+srv:your mongodb uri
+- AUTH_DB_NAME=your database name
+- NEXT_PUBLIC_IMGBB_API_KEY=your imgbb api key
+- NEXT_PUBLIC_SERVER_URL=your server link
+- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your stripe key
+- STRIPE_SECRET_KEY=your stripe secret key
+- GOOGLE_CLIENT_ID=your google client id
+- GOOGLE_CLIENT_SECRET=your google client secret
