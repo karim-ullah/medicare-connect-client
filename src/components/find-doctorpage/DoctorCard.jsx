@@ -1,89 +1,20 @@
-import Reveal from '@/Animation/Reveal';
-import { Button } from '@heroui/react';
-import Link from 'next/link';
-import React from 'react';
-import { FiUser } from 'react-icons/fi';
-import { MdOutlineSchedule } from 'react-icons/md';
+import Image from "next/image";
+import Link from "next/link";
+import { FiArrowRight, FiBriefcase, FiMapPin } from "react-icons/fi";
+import { MdOutlineVerified } from "react-icons/md";
 
-const DoctorCard = ({schedule}) => {
-    return (
-
-      <>
-
-      <Reveal>
-
-        <div className="w-full overflow-hidden rounded-3xl border border-default-200 bg-background shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-          {/* Image */}
-          <div className="relative h-60 overflow-hidden">
-            <img
-              src={schedule.imgUrl}
-              alt="Doctor"
-              className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-            />
-
-            <div className="absolute right-3 top-3 rounded-full bg-success px-3 py-1 text-xs font-medium text-white">
-              {schedule.status}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-5">
-            {/* Name & Specialization */}
-            <div>
-              <h3 className="text-xl font-bold text-foreground">
-                Dr. {schedule.name}
-              </h3>
-
-              <p className="text-sm font-medium text-primary">{schedule.specialization}</p>
-
-              <p className="mt-1 text-sm text-default-500">
-                {schedule.hospital}
-              </p>
-            </div>
-
-           
-
-            {/* Available Days */}
-            <div className="mt-2">
-
-              <div className="flex flex-wrap gap-2">
-                {["Mon", "Wed", "Fri"].map((day) => (
-                  <span
-                    key={day}
-                    className="rounded-lg bg-accent/10 px-2 py-1 text-sm"
-                  >
-                    {day}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className=" bg-default-200" />
-
-            {/* Stats */}
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex gap-3 items-center">
-                <p className="font-normal flex items-center gap-1"><MdOutlineSchedule/> {schedule.experience}yrs</p>
-                <p className="font-normal flex items-center gap-1"><FiUser/> 2344+</p>
-              </div>
-
-              
-
-              <div>
-                <p><span className="text-lg font-bold text-foreground">${schedule.fee}</span>/ <span className='font-mono'>visit</span></p>
-              </div>
-            </div>
-
-            {/* Button */}
-            <Button className="mt-5 w-full rounded-xl  font-medium transition hover:opacity-90">
-              <Link href={`/find-doctors/${schedule._id}`}>Book Appointment</Link>
-            </Button>
-          </div>
-        </div>
-      </Reveal>
-      
-      </>
-    );
-};
-
-export default DoctorCard;
+export default function DoctorCard({ schedule }) {
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-xl hover:shadow-slate-900/5">
+      <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+        <Image src={schedule.imgUrl} alt={`Dr. ${schedule.name}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-[1.03]" />
+        <span className="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm">{schedule.status || "Available"}</span>
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-start justify-between gap-3"><div><h3 className="flex items-center gap-1.5 text-lg font-bold text-slate-950">Dr. {schedule.name}<MdOutlineVerified className="shrink-0 text-[#087f78]" aria-label="Verified doctor" /></h3><p className="mt-1 text-sm font-semibold text-[#087f78]">{schedule.specialization}</p></div><p className="shrink-0 text-right"><strong className="text-lg text-slate-950">${schedule.fee}</strong><span className="block text-xs text-slate-500">per visit</span></p></div>
+        <div className="mt-4 space-y-2 text-sm text-slate-600"><p className="flex items-center gap-2"><FiMapPin className="shrink-0 text-slate-400" aria-hidden="true" /><span className="truncate">{schedule.hospital}</span></p><p className="flex items-center gap-2"><FiBriefcase className="shrink-0 text-slate-400" aria-hidden="true" />{schedule.experience} years of experience</p></div>
+        <div className="mt-5 border-t border-slate-100 pt-4"><Link className="primary-link w-full gap-2" href={`/find-doctors/${schedule._id}`}>View availability <FiArrowRight aria-hidden="true" /></Link></div>
+      </div>
+    </article>
+  );
+}

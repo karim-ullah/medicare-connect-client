@@ -1,4 +1,5 @@
 import { Button, Card } from '@heroui/react';
+import Image from 'next/image';
 import React from 'react';
 import { IoShareSocialOutline } from 'react-icons/io5';
 import { MdOutlineFavoriteBorder, MdOutlineVerifiedUser } from 'react-icons/md';
@@ -10,18 +11,22 @@ const LeftSide = ({schedule}) => {
                 <Card className="overflow-hidden p-0">
                   {/* Cover */}
                   <div className="relative">
-                    <img
+                    <Image
                       src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200"
-                      alt="cover"
+                      alt="Hospital interior"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 66vw"
                       className="h-56 w-full object-cover"
                     />
         
                     {/* Doctor Image */}
                     <div className="absolute -bottom-14 left-6">
                       <div className="h-28 w-28 overflow-hidden rounded-3xl border-4 border-background bg-background shadow-xl">
-                        <img
+                        <Image
                           src={schedule.imgUrl}
-                          alt={schedule.name}
+                          alt={`Dr. ${schedule.name}`}
+                          fill
+                          sizes="112px"
                           className="h-full w-full object-cover"
                         />
                       </div>

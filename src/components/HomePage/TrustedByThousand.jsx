@@ -1,115 +1,23 @@
-"use client";
-
-import Reveal from "@/Animation/Reveal";
 import { BiStar } from "react-icons/bi";
-import { FaStethoscope, FaUserSecret } from "react-icons/fa";
-import { FaCalendarDays } from "react-icons/fa6";
-
-
+import { FaStethoscope, FaUserGroup } from "react-icons/fa6";
+import { FiCalendar } from "react-icons/fi";
 
 const stats = [
-  {
-    icon: FaStethoscope,
-    value: "284+",
-    title: "Expert Doctors",
-  },
-  {
-    icon: FaUserSecret,
-    value: "18,420+",
-    title: "Patients Served",
-  },
-  {
-    icon: FaCalendarDays,
-    value: "94,730+",
-    title: "Appointments",
-  },
-  {
-    icon: BiStar,
-    value: "52,180+",
-    title: "Patient Reviews",
-  },
+  { icon: FaStethoscope, value: "284+", title: "Verified doctors" },
+  { icon: FaUserGroup, value: "18k+", title: "Patients supported" },
+  { icon: FiCalendar, value: "94k+", title: "Appointments booked" },
+  { icon: BiStar, value: "4.9/5", title: "Average patient rating" },
 ];
 
 export default function StatsSection() {
   return (
-    <>
-    <Reveal>
-
-    <section className="relative overflow-hidden bg-[#0D79B7] py-24">
-
-      {/* Background Circles */}
-
-      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-white/10 " />
-
-      <div className="absolute -bottom-52 -right-40 h-96 w-96 rounded-full bg-cyan-400/10" />
-
-      {/* Content */}
-
+    <section className="bg-[#103f43] py-16 text-white" aria-labelledby="trust-heading">
       <div className="container">
-
-        {/* Heading */}
-
-        <div className="text-center">
-
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Trusted by Thousands
-          </h2>
-
-          <p className="mt-4 text-lg text-blue-100">
-            Numbers that reflect our commitment to healthcare excellence
-          </p>
-
-        </div>
-
-        {/* Stats */}
-
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-10">
-
-          {stats.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={index}
-                className="group text-center"
-              >
-
-                {/* Icon */}
-
-                <div
-                  className="mx-auto flex h-20 w-20 items-center justify-center
-                  rounded-3xl bg-white/15 backdrop-blur-md
-                  transition duration-300
-                  group-hover:-translate-y-2 group-hover:bg-white/20"
-                >
-                  <Icon
-                    className="text-white"
-                    size={30}
-                    strokeWidth={2}
-                  />
-                </div>
-
-                {/* Number */}
-
-                <h3 className="mt-8 text-3xl md:text-4xl font-extrabold text-white">
-                  {item.value}
-                </h3>
-
-                {/* Label */}
-
-                <p className="mt-3 text-lg text-blue-100">
-                  {item.title}
-                </p>
-
-              </div>
-            );
-          })}
-
-        </div>
-
+        <div className="max-w-xl"><p className="text-xs font-bold uppercase tracking-[0.18em] text-teal-200">Care backed by confidence</p><h2 id="trust-heading" className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Healthcare people come back to</h2></div>
+        <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/15 lg:grid-cols-4">
+          {stats.map(({ icon: Icon, value, title }) => <div key={title} className="bg-[#103f43] p-5 sm:p-7"><Icon className="text-teal-300" size={22} aria-hidden="true" /><dd className="mt-5 text-2xl font-bold sm:text-3xl">{value}</dd><dt className="mt-1 text-sm leading-5 text-teal-50/70">{title}</dt></div>)}
+        </dl>
       </div>
     </section>
-    </Reveal>
-    </>
   );
 }

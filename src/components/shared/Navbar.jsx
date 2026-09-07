@@ -1,213 +1,94 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Button, Avatar } from "@heroui/react";
+
+import { useEffect, useRef, useState } from "react";
+import { Avatar } from "@heroui/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { FiUser } from "react-icons/fi";
+import { FiChevronDown, FiMenu, FiUser, FiX } from "react-icons/fi";
 import { RiDashboardLine } from "react-icons/ri";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineHealthAndSafety, MdOutlineLogout } from "react-icons/md";
 import toast from "react-hot-toast";
 
-const Navbar = () => {
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/find-doctors", label: "Find doctors" },
+  { href: "/about-us", label: "About" },
+  { href: "/contact-us", label: "Contact" },
+];
 
+export default function Navbar() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  // console.log(user);
-  const role = user?.role
+  const pathname = usePathname();
+  const accountRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isDashOpen, setIsDashOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    }
-
-    const handleClickOutside = () => {
-      setIsDashOpen(false);
+    const closeAccount = (event) => {
+      if (!accountRef.current?.contains(event.target)) setIsAccountOpen(false);
     };
-
-    if (isDashOpen) {
-      document.addEventListener("click", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [user, isDashOpen]);
-
-  const handleDashboard = () => {
-    setIsDashOpen(!isDashOpen);
-  };
+    document.addEventListener("pointerdown", closeAccount);
+    return () => document.removeEventListener("pointerdown", closeAccount);
+  }, []);
 
   const handleLogOut = async () => {
     await authClient.signOut();
-    toast.success("Logout successfully");
-    window.location.href = '/'
+    toast.success("You’re signed out");
+    window.location.assign("/");
   };
 
-  const navLinks = (
-    <>
-      <li>
-        <Link href="/" className="block py-2  font-mono text-primary">
-          Home
+  const navLinks = links.map((link) => {
+    const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+    return (
+      <li key={link.href}>
+        <Link href={link.href} onClick={() => setIsMenuOpen(false)} aria-current={active ? "page" : undefined} className={`block rounded-lg px-3 py-2 text-sm font-medium transition ${active ? "bg-[#e4f5f2] text-[#08645f]" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"}`}>
+          {link.label}
         </Link>
       </li>
-      <li>
-        <Link
-          href="/find-doctors"
-          className="block py-2  font-mono text-primary"
-        >
-          Find Doctors
-        </Link>
-      </li>
-      <li>
-        <Link href="/about-us" className="block py-2  font-mono text-primary">
-          About Us
-        </Link>
-      </li>
-      <li>
-        <Link href="/contact-us" className="block py-2  font-mono text-primary">
-          Contact Us
-        </Link>
-      </li>
-    </>
-  );
+    );
+  });
 
   return (
-    
-      <nav className="sticky top-0 z-40 border-b border-separator bg-background/70 backdrop-blur-lg">
-        <header className="relative container flex h-14 items-center justify-between gap-2">
-          <div className="flex items-center gap-4">
-            <button
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <span className="sr-only">Menu</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </button>
-            <div>
-
-              <Link href={'/'}>
-              <h3 className="font-bold">
-                <span className="text-[#0369A1] text-xl">MediCare</span>
-                <span className="text-xs md:text-sm text-foreground font-light md:font-medium">Connect</span>
-              </h3>
-              </Link>
-            </div>
-          </div>
-
-          <div>
-            <ul className="hidden md:flex items-center gap-4">{navLinks}</ul>
-          </div>
-
-          {isLoggedIn ? (
-            <div
-              onClick={handleDashboard}
-              className="cursor-pointer flex items-center gap-1.5 border border-accent px-3 py-0 md:py-1 rounded-xl hover:border"
-            >
-              <Avatar size="sm">
-                <Avatar.Image alt={user?.name} src={user?.image} />
-                <Avatar.Fallback>
-                  {user?.name
-                    .split(" ")
-                    .slice(0, 2)
-                    .map((word) => word[0])
-                    .join("")}
-                </Avatar.Fallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <span className="font-medium capitalize line-clamp-1 md:line-clamp-none">{user?.name}</span>
-                <span className="text-sm font-mono text-primary -mt-1">
-                  {user?.role}
-                </span>
-              </div>
+    <nav className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl" aria-label="Primary navigation">
+      <div className="container relative flex h-18 items-center justify-between gap-4">
+        <Link href="/" className="flex items-center gap-2 rounded-lg" aria-label="MediCare Connect home">
+          <span className="grid size-9 place-items-center rounded-xl bg-[#087f78] text-white"><MdOutlineHealthAndSafety size={21} aria-hidden="true" /></span>
+          <span className="text-lg font-bold tracking-tight text-slate-950">MediCare<span className="text-[#087f78]"> Connect</span></span>
+        </Link>
+        <ul className="hidden items-center gap-1 md:flex">{navLinks}</ul>
+        <div className="flex items-center gap-2">
+          {user ? (
+            <div ref={accountRef} className="relative">
+              <button type="button" onClick={() => setIsAccountOpen((open) => !open)} aria-expanded={isAccountOpen} aria-haspopup="menu" className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-left transition hover:border-teal-300 hover:bg-teal-50">
+                <Avatar size="sm"><Avatar.Image alt="" src={user.image} /><Avatar.Fallback>{user.name?.slice(0, 2).toUpperCase()}</Avatar.Fallback></Avatar>
+                <span className="hidden max-w-28 truncate text-sm font-semibold sm:block">{user.name}</span>
+                <FiChevronDown className={`transition ${isAccountOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+              </button>
+              {isAccountOpen && (
+                <div role="menu" className="absolute right-0 top-13 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
+                  <div className="border-b border-slate-100 px-3 py-3"><p className="truncate text-sm font-semibold">{user.name}</p><p className="truncate text-xs text-slate-500">{user.email}</p></div>
+                  <Link role="menuitem" href={`/dashboard/${user.role}`} className="mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-slate-100"><RiDashboardLine aria-hidden="true" /> Dashboard</Link>
+                  <Link role="menuitem" href={`/dashboard/${user.role}/profile`} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-slate-100"><FiUser aria-hidden="true" /> My profile</Link>
+                  <button role="menuitem" onClick={handleLogOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-red-700 hover:bg-red-50"><MdOutlineLogout aria-hidden="true" /> Sign out</button>
+                </div>
+              )}
             </div>
           ) : (
-            <div className="space-x-2">
-              <Button className={"bg-background text-foreground border"}>
-                <Link href={'/login'}>Login</Link>
-              </Button>
-              <Button>
-                <Link href={"/register"}>Register</Link>
-              </Button>
-            </div>
+            <div className="hidden items-center gap-2 sm:flex"><Link className="secondary-link px-4 py-2" href="/login">Log in</Link><Link className="primary-link px-4 py-2" href="/register">Create account</Link></div>
           )}
-
-
-
-          {isMenuOpen && (
-        <div className="absolute left-4 top-16 z-50 w-64 overflow-hidden rounded-2xl border border-default-200 bg-background shadow-xl md:hidden">
-          <ul className="flex flex-col gap-2 p-4">{navLinks}</ul>
+          <button type="button" className="grid size-11 place-items-center rounded-xl border border-slate-200 text-slate-700 md:hidden" onClick={() => setIsMenuOpen((open) => !open)} aria-expanded={isMenuOpen} aria-controls="mobile-menu" aria-label={isMenuOpen ? "Close menu" : "Open menu"}>
+            {isMenuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+          </button>
         </div>
-      )}
-
-      {isDashOpen && (
-        <div className="absolute right-4 top-16 z-50 w-64 overflow-hidden rounded-2xl border border-default-200 bg-background shadow-xl">
-          {/* User Info */}
-          <div className="border-b border-default-200 p-4">
-            <h4 className="font-semibold text-foreground">{user?.name}</h4>
-            <p className="text-sm font-mono">{user?.email}</p>
+        {isMenuOpen && (
+          <div id="mobile-menu" className="absolute inset-x-4 top-20 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl md:hidden">
+            <ul className="space-y-1">{navLinks}</ul>
+            {!user && <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 sm:hidden"><Link className="secondary-link" href="/login">Log in</Link><Link className="primary-link" href="/register">Create account</Link></div>}
           </div>
-
-          {/* Menu Items */}
-          <div className="p-2">
-            <Link className="cursor-pointer" href={`/dashboard/${role}/profile`}>
-            
-            <button className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-danger/10">
-              <FiUser className="text-default-500" />
-              <span className="font-mono">My Profile</span>
-            </button>
-            </Link>
-
-            <button className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-danger/10">
-              <RiDashboardLine className="text-default-500" />
-              <Link href={`/dashboard/${role}`} className="font-mono">
-                Dashboard
-              </Link>
-            </button>
-
-            <div className="my-2 border-t border-default-200" />
-
-            <button
-              onClick={handleLogOut}
-              className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-danger transition hover:bg-danger/10 cursor-pointer"
-            >
-              <MdOutlineLogout />
-              <span>Logout</span>
-            </button>
-          </div>
-        </div>
-      )}
-        </header>
-
-          
-      </nav>
-
-      
+        )}
+      </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}

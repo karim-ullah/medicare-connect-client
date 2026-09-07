@@ -3,8 +3,9 @@ import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
 
-const client = new MongoClient(process.env.MONGO_URI);
-const db = client.db(process.env.AUTH_DB_NAME);
+const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017";
+const client = new MongoClient(mongoUri);
+const db = client.db(process.env.AUTH_DB_NAME || "medicare-connect");
 
 export const auth = betterAuth({
   emailAndPassword: {

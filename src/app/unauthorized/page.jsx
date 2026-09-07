@@ -19,7 +19,7 @@ export default function UnauthorizedPage() {
         <h2 className="mt-4 text-2xl font-semibold">Access Denied</h2>
 
         <p className="mt-3 text-default-500">
-          Sorry, you don't have permission to access this page. Please contact
+          Sorry, you don&apos;t have permission to access this page. Please contact
           the administrator if you believe this is a mistake.
         </p>
 

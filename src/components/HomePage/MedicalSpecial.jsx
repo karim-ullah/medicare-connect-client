@@ -1,124 +1,32 @@
-"use client";
-
-import Reveal from "@/Animation/Reveal";
+import Link from "next/link";
 import { BiHeart } from "react-icons/bi";
 import { FaBaby, FaBone, FaBrain, FaLaptopMedical, FaMicroscope } from "react-icons/fa";
-
-
+import { FiArrowUpRight } from "react-icons/fi";
 
 const specializations = [
-  {
-    title: "Cardiology",
-    subtitle: "Heart & Cardiovascular",
-    icon: BiHeart,
-    iconColor: "text-red-500",
-    bg: "bg-red-50",
-    border: "border-red-100",
-  },
-  {
-    title: "Neurology",
-    subtitle: "Brain & Nervous System",
-    icon: FaBrain,
-    iconColor: "text-violet-500",
-    bg: "bg-violet-50",
-    border: "border-violet-100",
-  },
-  {
-    title: "Orthopedics",
-    subtitle: "Bones & Joints",
-    icon: FaBone,
-    iconColor: "text-orange-500",
-    bg: "bg-orange-50",
-    border: "border-orange-100",
-  },
-  {
-    title: "Pediatrics",
-    subtitle: "Child Healthcare",
-    icon: FaBaby,
-    iconColor: "text-green-500",
-    bg: "bg-green-50",
-    border: "border-green-100",
-  },
-  {
-    title: "Dermatology",
-    subtitle: "Skin & Hair",
-    icon: FaLaptopMedical,
-    iconColor: "text-pink-500",
-    bg: "bg-pink-50",
-    border: "border-pink-100",
-  },
-  {
-    title: "Oncology",
-    subtitle: "Cancer Treatment",
-    icon: FaMicroscope,
-    iconColor: "text-blue-500",
-    bg: "bg-blue-50",
-    border: "border-blue-100",
-  },
+  { title: "Cardiology", subtitle: "Heart and cardiovascular", query: "Cardiologist", icon: BiHeart, tone: "bg-rose-50 text-rose-600" },
+  { title: "Neurology", subtitle: "Brain and nervous system", query: "Neurology", icon: FaBrain, tone: "bg-violet-50 text-violet-600" },
+  { title: "Orthopedics", subtitle: "Bones and joints", query: "Orthopedics", icon: FaBone, tone: "bg-amber-50 text-amber-600" },
+  { title: "Pediatrics", subtitle: "Children’s healthcare", query: "Pediatrics", icon: FaBaby, tone: "bg-emerald-50 text-emerald-600" },
+  { title: "Dermatology", subtitle: "Skin, hair and nails", query: "Dermatology", icon: FaLaptopMedical, tone: "bg-pink-50 text-pink-600" },
+  { title: "Oncology", subtitle: "Cancer care", query: "Oncology", icon: FaMicroscope, tone: "bg-blue-50 text-blue-600" },
 ];
 
 export default function Specializations() {
   return (
-    <section className="py-16">
-      <Reveal>
-
+    <section className="bg-white py-20 sm:py-24" aria-labelledby="specialties-heading">
       <div className="container">
-
-        {/* Heading */}
-        <div className="text-center mb-16">
-          <span className="text-cyan-500 font-semibold uppercase tracking-widest text-xs">
-            Browse by Category
-          </span>
-
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-slate-900">
-            Medical Specializations
-          </h2>
-
-          <p className="mt-4 text-slate-500 text-lg">
-            Find the right specialist for your healthcare needs
-          </p>
-        </div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-          {specializations.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <div
-                key={index}
-                className={`${item.bg} ${item.border}
-                border rounded-3xl p-4 text-center
-                transition-all duration-300
-                hover:-translate-y-2 hover:shadow-2xl
-                cursor-pointer group`}
-              >
-                <div
-                  className="w-12 h-12 rounded-2xl bg-white
-                  shadow-md flex items-center justify-center
-                  mx-auto mb-6 group-hover:scale-110
-                  transition"
-                >
-                  <Icon
-                    className={`${item.iconColor}`}
-                    size={30}
-                    strokeWidth={2}
-                  />
-                </div>
-
-                <h3 className="font-semibold text-lg text-slate-900">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-sm text-slate-500">
-                  {item.subtitle}
-                </p>
-              </div>
-            );
-          })}
+        <div className="max-w-2xl"><p className="section-kicker">Browse by specialty</p><h2 id="specialties-heading" className="section-title mt-3">Start with the care you need</h2><p className="mt-4 text-base leading-7 text-slate-600">Choose a specialty to see relevant doctors and available appointments.</p></div>
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {specializations.map(({ title, subtitle, query, icon: Icon, tone }) => (
+            <Link key={title} href={`/find-doctors?specialization=${encodeURIComponent(query)}`} className="group flex min-h-28 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-lg hover:shadow-slate-900/5">
+              <span className={`grid size-14 shrink-0 place-items-center rounded-2xl ${tone}`}><Icon size={24} aria-hidden="true" /></span>
+              <span className="min-w-0 flex-1"><strong className="block text-base text-slate-950">{title}</strong><span className="mt-1 block text-sm text-slate-500">{subtitle}</span></span>
+              <FiArrowUpRight className="text-slate-400 transition group-hover:text-[#087f78]" aria-hidden="true" />
+            </Link>
+          ))}
         </div>
       </div>
-      </Reveal>
     </section>
   );
 }

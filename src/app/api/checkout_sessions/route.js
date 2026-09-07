@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-import { stripe } from "../../../lib/stripe";
+import { getStripe } from "../../../lib/stripe";
 import { getUser } from "@/lib/core/session";
 
 export async function POST(req) {
@@ -26,6 +26,7 @@ export async function POST(req) {
     } = body;
 
     // Create Checkout Sessions from body params.
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       customer_email: user?.email,
       line_items: [

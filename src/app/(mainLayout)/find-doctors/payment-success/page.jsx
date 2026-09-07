@@ -1,5 +1,5 @@
 import { createAppointment, createPayment } from "@/lib/Actions/patient/action";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@heroui/react";
@@ -11,6 +11,7 @@ export default async function Success({ searchParams }) {
   if (!session_id)
     throw new Error("Please provide a valid session_id (`cs_test_...`)");
 
+  const stripe = getStripe();
   const {
     status,
     metadata,

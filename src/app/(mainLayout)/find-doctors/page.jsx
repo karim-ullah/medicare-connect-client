@@ -1,13 +1,11 @@
-import Reveal from "@/Animation/Reveal";
 import DoctorCard from "@/components/find-doctorpage/DoctorCard";
 import PaginationPart from "@/components/find-doctorpage/Pagination";
 import SearchFilterPanel from "@/components/find-doctorpage/SearchFilterPanel";
 import { getSchedules } from "@/lib/api/findallschedules";
-import React from "react";
+import Link from "next/link";
 
 const FindDoctorsPage = async ({ searchParams }) => {
   const sParams = await searchParams;
-  console.log(sParams);
   const search = sParams.search || "";
   const specialization = sParams.specialization || "";
   const sortBy = sParams.sortBy || "";
@@ -27,46 +25,24 @@ const FindDoctorsPage = async ({ searchParams }) => {
     params.set("page", page);
   }
   const data = await getSchedules(params);
-  const schedules = data.schedules;
+  const schedules = data?.schedules ?? [];
 
   // console.log(data);
   return (
-    <div className="container py-10">
-      {/* haeading */}
-      <Reveal>
-        <div>
-          <h2 className="font-bold text-4xl">Find the Right Doctor</h2>
-          <p className="text-primary text-lg">
-            Browse {schedules.length} verified specialists across{" "}
-            {schedules.length} specializations
-          </p>
-        </div>
-      </Reveal>
-
-      <div className="mt-6">
-        <Reveal>
-          <SearchFilterPanel />
-        </Reveal>
-      </div>
-
-      {/* card */}
-
-      <div className="mt-6">
-        <Reveal>
-          <p className="text-foreground text-sm">
-            showing {schedules.length} doctors
-          </p>
-        </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
+    <main className="min-h-[70vh] py-12 sm:py-16">
+      <div className="container">
+        <div className="max-w-2xl"><p className="section-kicker">Doctor directory</p><h1 className="section-title mt-3">Find the right doctor for you</h1><p className="mt-4 leading-7 text-slate-600">Search verified specialists, compare key details, and choose an available appointment.</p></div>
+        <div className="mt-8"><SearchFilterPanel /></div>
+        <div className="mt-8 flex items-center justify-between"><p className="text-sm text-slate-600"><strong className="text-slate-950">{schedules.length}</strong> {schedules.length === 1 ? "doctor" : "doctors"} found</p></div>
+        {schedules.length > 0 ? <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {schedules &&
             schedules.map((schedule) => (
               <DoctorCard key={schedule._id} schedule={schedule}></DoctorCard>
             ))}
-        </div>
-
-        <PaginationPart data={data} />
+        </div> : <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-white px-5 py-14 text-center"><h2 className="text-lg font-bold text-slate-950">No matching doctors found</h2><p className="mt-2 text-sm text-slate-500">Try a broader search or clear your filters.</p><Link href="/find-doctors" className="secondary-link mt-5">Clear filters</Link></div>}
+        {schedules.length > 0 && <PaginationPart data={data} />}
       </div>
-    </div>
+    </main>
   );
 };
 

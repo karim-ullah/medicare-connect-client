@@ -140,7 +140,6 @@ const DoctorProfilePage = () => {
               onChange={(key)=> setQualifications(key)}
               className="w-full"
               placeholder="Select Qualifications"
-              selectionMode="multiple"
             >
               <Label>Qualifications</Label>
               <Select.Trigger>
@@ -173,7 +172,6 @@ const DoctorProfilePage = () => {
               onChange={(key)=> setTimeSlots(key)}
               className="w-full"
               placeholder="Select Time"
-              selectionMode="multiple"
             >
               <Label>Time Slots</Label>
               <Select.Trigger>
@@ -233,7 +231,6 @@ const DoctorProfilePage = () => {
               onChange={(key)=> setDaySlots(key)}
               className="w-full"
               placeholder="Select Day"
-              selectionMode="multiple"
             >
               <Label>Day Slots</Label>
               <Select.Trigger>

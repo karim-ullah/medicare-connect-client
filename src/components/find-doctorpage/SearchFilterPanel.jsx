@@ -1,115 +1,43 @@
 "use client";
-import { Button, ListBox, SearchField, Select } from "@heroui/react";
-import { useRouter,  } from "next/navigation";
-import React, { useState } from "react";
 
-const SearchFilterPanel = () => {
-  const [search, setSearch] = useState("");
-  const [specialization, setSpecialization] = useState("");
-  const [sortBy, setSortBy] = useState("")
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FiSearch, FiSliders, FiX } from "react-icons/fi";
 
-  const router = useRouter()
+const specialties = ["Cardiologist", "Medicine", "Neurology", "Orthopedics", "Pediatrics", "Dermatology", "Oncology"];
 
+export default function SearchFilterPanel() {
+  const router = useRouter();
+  const current = useSearchParams();
+  const [search, setSearch] = useState(current.get("search") || "");
+  const [specialization, setSpecialization] = useState(current.get("specialization") || "");
+  const [sortBy, setSortBy] = useState(current.get("sortBy") || "");
 
-  const handleFilter = ()=>{
-    const params = new URLSearchParams()
-    if(search){
-        params.set('search', search)
-    }
-    if(specialization){
-        params.set('specialization', specialization)
-    }
+  const applyFilters = (event) => {
+    event.preventDefault();
+    const params = new URLSearchParams();
+    if (search.trim()) params.set("search", search.trim());
+    if (specialization) params.set("specialization", specialization);
+    if (sortBy) params.set("sortBy", sortBy);
+    router.push(`/find-doctors${params.size ? `?${params}` : ""}`);
+  };
 
-    if(sortBy){
-        params.set('sortBy', sortBy)
-    }
+  const clearFilters = () => {
+    setSearch(""); setSpecialization(""); setSortBy(""); router.push("/find-doctors");
+  };
 
-    router.push(`/find-doctors?${params.toString()}`)
-  }
+  const hasFilters = Boolean(search || specialization || sortBy);
 
-//   console.log(search, specialization);
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <SearchField className={"flex-1"} name="search" aria-label="search" >
-        <SearchField.Group className={"bg-accent/10"}>
-          <SearchField.SearchIcon />
-          <SearchField.Input className="w-[280px]" placeholder="Search..." value={search} onChange={e=> setSearch(e.target.value)}/>
-          <SearchField.ClearButton />
-        </SearchField.Group>
-      </SearchField>
-
-      <Select className="max-w-[256px]" placeholder="Search by" aria-label="specialization" value={specialization} onChange={(value)=>setSpecialization(value)}>
-        <Select.Trigger className={'bg-accent/10'}>
-          <Select.Value />
-          <Select.Indicator />
-        </Select.Trigger>
-        <Select.Popover>
-          <ListBox>
-            <ListBox.Item id="" textValue="">
-              Search by spe..
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="Cardiologist" textValue="Cardiologist">
-              Cardiologist
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="Medicine" textValue="Medicine">
-              Medicine
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="Hearts" textValue="Hearts">
-              Hearts
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            
-          </ListBox>
-        </Select.Popover>
-      </Select>
-
-
-      <Select className="max-w-[256px]" placeholder="Sort by" aria-label="sortBy" value={sortBy} onChange={(value)=>setSortBy(value)}>
-        <Select.Trigger className={'bg-accent/10'}>
-          <Select.Value />
-          <Select.Indicator />
-        </Select.Trigger>
-        <Select.Popover>
-          <ListBox>
-            <ListBox.Item id="" textValue="">
-              Sort by
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="feeAsc" textValue="feeAsc">
-              Consultation Fee: Low → High
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="feeDesc" textValue="feeDesc">
-              Consultation Fee: High → Low
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="experienceAsc" textValue="experienceAsc">
-              Experience: Low → High
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="experienceDesc" textValue="experienceDesc">
-              Experience: High → Low
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="ratingAsc" textValue="ratingAsc">
-              Rating: Low → High
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            <ListBox.Item id="ratingDesc" textValue="ratingDesc">
-              Experience: High → Low
-              <ListBox.ItemIndicator />
-            </ListBox.Item>
-            
-          </ListBox>
-        </Select.Popover>
-      </Select>
-
-      <Button onClick={handleFilter}>Apply filter</Button>
-    </div>
+    <form onSubmit={applyFilters} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" aria-label="Doctor search filters">
+      <div className="mb-4 flex items-center gap-2 text-sm font-bold text-slate-900"><FiSliders className="text-[#087f78]" aria-hidden="true" />Refine your search</div>
+      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_auto]">
+        <label className="relative"><span className="sr-only">Doctor name or hospital</span><FiSearch className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true" /><input type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Doctor name or hospital" className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-500 focus:bg-white" /></label>
+        <label><span className="sr-only">Specialty</span><select value={specialization} onChange={(e) => setSpecialization(e.target.value)} className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 focus:border-teal-500 focus:bg-white"><option value="">All specialties</option>{specialties.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+        <label><span className="sr-only">Sort doctors</span><select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 focus:border-teal-500 focus:bg-white"><option value="">Recommended</option><option value="feeAsc">Fee: low to high</option><option value="feeDesc">Fee: high to low</option><option value="experienceDesc">Most experienced</option><option value="ratingDesc">Highest rated</option></select></label>
+        <button type="submit" className="primary-link h-12 px-6">Search</button>
+      </div>
+      {hasFilters && <button type="button" onClick={clearFilters} className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900"><FiX aria-hidden="true" />Clear all filters</button>}
+    </form>
   );
-};
-
-export default SearchFilterPanel;
+}

@@ -1,16 +1,20 @@
 import { headers } from "next/headers";
-import { auth } from "../auth";
 import { baseUrl } from "../baseUrl";
 
 export const serverFetch = async (path) => {
-  const res = await fetch(`${baseUrl}${path}`);
-  if (!res.ok) {
+  if (!baseUrl) return null;
+
+  try {
+    const res = await fetch(`${baseUrl}${path}`);
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
     return null;
   }
-  return res.json();
 };
 
 export const serverMutation = async (path, method, data) => {
+ const { auth } = await import("../auth");
 
  const {token} = await auth.api.getToken({
   headers: await headers()

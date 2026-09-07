@@ -1,108 +1,32 @@
-import Reveal from "@/Animation/Reveal";
-import { Button } from "@heroui/react";
+import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { FiArrowRight, FiCalendar, FiCheckCircle, FiShield } from "react-icons/fi";
 
-const Hero = () => {
+export default function Hero() {
   return (
-
-    <>
-    <Reveal>
-
-    <section className="relative isolate overflow-hidden max-h-fit flex items-center py-16 w-full">
-      {/* Background */}
-
-
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=1600&h=900&fit=crop&auto=format"
-          className="h-full w-full object-cover scale-110 animate-[pulse_12s_linear_infinite]"
-          alt=""
-        />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-900/30"></div>
-
-        {/* Blur Circle */}
-        <div className="absolute -left-32 top-40 h-96 w-96 rounded-full bg-cyan-500/20 blur-[120px]"></div>
-
-        <div className="absolute right-0 bottom-0 h-96 w-96 rounded-full bg-blue-600/20 blur-[120px]"></div>
-      </div>
-
-      <div className="relative z-20 container w-full">
-        <div className="flex items-center justify-between">
-          {/* LEFT */}
-          <div>
-            <span className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-cyan-300 backdrop-blur-md">
-              Trusted by 18,000+ Patients
-            </span>
-
-            <h1 className="mt-8 text-6xl lg:text-6xl font-black leading-tight tracking-tight text-white">
-              Your Health,
-              <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                Our Priority.
-              </span>
-            </h1>
-
-            <p className="mt-8 max-w-xl text-lg leading-8 text-slate-300">
-              Connect with experienced doctors, schedule appointments
-              effortlessly and manage your healthcare journey in one secure
-              platform.
-            </p>
-
-            <div className="mt-10 flex flex-wrap gap-5">
-              <Button className="rounded-xl px-8 py-4 font-semibold text-white shadow-xl transition hover:scale-105 hover:bg-cyan-400">
-                <Link href={'/find-doctors'}>
-                
-                Find Doctor →
-                </Link>
-              </Button>
-
-              <Button className="rounded-xl border border-white/20 bg-white/5 px-8 py-4 text-white backdrop-blur-md transition hover:bg-white/10">
-                <Link href={'/find-doctors'}>
-                
-                Book Appointment
-                </Link>
-              </Button>
-            </div>
+    <section className="relative overflow-hidden bg-[#eef8f7] py-14 sm:py-20 lg:py-24">
+      <div className="absolute -right-32 -top-32 size-96 rounded-full bg-teal-200/35 blur-3xl" aria-hidden="true" />
+      <div className="container relative grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="max-w-2xl">
+          <p className="section-kicker inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/80 px-3 py-2"><FiShield aria-hidden="true" /> Trusted, verified care</p>
+          <h1 className="mt-6 text-4xl font-bold leading-[1.08] tracking-[-0.04em] text-slate-950 sm:text-5xl lg:text-6xl">The right doctor, <span className="text-[#087f78]">right when you need one.</span></h1>
+          <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">Find verified specialists, compare availability, and book an appointment in minutes—without the usual phone calls and waiting.</p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/find-doctors" className="primary-link gap-2 px-6">Find a doctor <FiArrowRight aria-hidden="true" /></Link><Link href="/about-us" className="secondary-link px-6">How it works</Link></div>
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-600" aria-label="Service benefits">
+            {['Verified clinicians', 'Secure booking', 'Clear consultation fees'].map((item) => <li key={item} className="flex items-center gap-2"><FiCheckCircle className="text-[#087f78]" aria-hidden="true" />{item}</li>)}
+          </ul>
+        </div>
+        <div className="relative mx-auto w-full max-w-xl lg:mx-0">
+          <div className="relative aspect-[4/4.35] overflow-hidden rounded-[2rem] bg-slate-200 shadow-2xl shadow-teal-950/10">
+            <Image src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=1000&h=1100&fit=crop&auto=format" alt="A medical team collaborating in a bright clinic" fill priority sizes="(max-width: 1024px) 90vw, 44vw" className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-transparent" aria-hidden="true" />
           </div>
-
-          {/* RIGHT */}
-
-          <div className="hidden lg:flex justify-center relative">
-            <div className="grid grid-cols-2 gap-y-20 gap-x-10">
-              {/* Floating Card */}
-
-              <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
-                <p className="text-white font-semibold">Appointment Today</p>
-
-                <p className="text-cyan-400 text-3xl font-bold mt-2">1,248</p>
-              </div>
-
-              <div className=" rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
-                <p className="text-white font-semibold">Appointment Today</p>
-
-                <p className="text-cyan-400 text-3xl font-bold mt-2">1,248</p>
-              </div>
-
-              <div className="rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
-                <p className="text-white font-semibold">Patient Rating</p>
-
-                <p className="text-yellow-400 text-3xl font-bold mt-2">★ 4.9</p>
-              </div>
-              <div className=" rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 p-8 shadow-2xl">
-                <p className="text-white font-semibold">Patient Rating</p>
-
-                <p className="text-yellow-400 text-3xl font-bold mt-2">★ 4.9</p>
-              </div>
-            </div>
+          <div className="absolute -bottom-5 left-4 right-4 flex items-center gap-3 rounded-2xl border border-white/80 bg-white/95 p-4 shadow-xl backdrop-blur sm:left-8 sm:right-auto sm:min-w-72">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#e4f5f2] text-[#087f78]"><FiCalendar size={21} aria-hidden="true" /></span>
+            <div><p className="text-sm font-bold text-slate-900">Appointments that fit your day</p><p className="mt-0.5 text-xs text-slate-500">See available times before you book</p></div>
           </div>
         </div>
       </div>
     </section>
-    </Reveal>
-    </>
   );
-};
-
-export default Hero;
+}
