@@ -1,6 +1,5 @@
 import AppointRow from '@/components/dashboard/appointment-requests/AppointRow';
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
-import UserTrow from '@/components/dashboard/manageuser/UserTrow';
 import { getAppointments } from '@/lib/Actions/admin/actiions';
 import { Table } from '@heroui/react';
 import React from 'react';

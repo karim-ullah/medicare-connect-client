@@ -1,7 +1,7 @@
 import DashboardHeading from "@/components/dashboard/DashboardHeading";
 import UserTrow from "@/components/dashboard/manageuser/UserTrow";
 import { getUsers } from "@/lib/Actions/admin/actiions";
-import { Button, Table } from "@heroui/react";
+import { Table } from "@heroui/react";
 import React from "react";
 
 const ManageUsers = async () => {

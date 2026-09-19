@@ -50,7 +50,7 @@ const AddScheduleForm = ({ user, setScheduleOpen, doctor }) => {
   };
 
   return (
-    <Card className="mt-10">
+    <Card className="mt-6">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-xl">Add Schedule</h3>
         <div onClick={() => setScheduleOpen(false)} className="cursor-pointer">
@@ -141,13 +141,12 @@ const AddScheduleForm = ({ user, setScheduleOpen, doctor }) => {
           </div>
 
           <div>
-            <Button slot="close" type="submit">
+            <Button type="submit">
               Add Schedule
             </Button>
           </div>
         </form>
       </div>
-      <div></div>
     </Card>
   );
 };

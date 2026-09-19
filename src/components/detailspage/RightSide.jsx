@@ -1,87 +1,57 @@
 "use client";
-import { createAppointment } from "@/lib/Actions/patient/action";
 import { Button, Card, Separator } from "@heroui/react";
 import React, { useState } from "react";
 
 const RightSide = ({ schedule, user }) => {
-//   patientId;
-//   doctorId;
-//   appointmentDate;
-//   appointmentTime;
-//   appointmentStatus;
-//   symptoms;
-//   paymentStatus;
-
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  // console.log(selectedDay, selectedTime);
 
   const daySlots = schedule.daySlots;
   const timeSlots = schedule.timeSlots;
 
-  const totalFee = Number(schedule.fee) + 5
-
-  const patientId = user?.id
-  const patientName = user?.name
-  const doctorId = schedule.doctorId
-  const doctorName = schedule.name
-  const specialization = schedule.specialization
-  const appointmentDate = selectedDay
-  const appointmentTime = selectedTime
-  const paymentStatus = 'Paid'
-  const status = 'pending'
-
+  const totalFee = Number(schedule.fee) + 5;
 
   const appointmentData = {
-    patientId,
-    patientName,
-    doctorId,
-    doctorName,
-    specialization,
-    appointmentDate,
-    appointmentTime,
-    paymentStatus,
-    status,
+    patientId: user?.id,
+    patientName: user?.name,
+    doctorId: schedule.doctorId,
+    doctorName: schedule.name,
+    specialization: schedule.specialization,
+    appointmentDate: selectedDay,
+    appointmentTime: selectedTime,
+    paymentStatus: "Paid",
+    status: "pending",
     price: totalFee,
-  }
+  };
 
-
-
-  const handleAppointmentSubmit = async()=>{
+  const handleAppointmentSubmit = async () => {
     const res = await fetch("/api/checkout_sessions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(appointmentData),
-  });
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(appointmentData),
+    });
 
-  const session = await res.json();
-  // console.log(session, 'details page');
-  window.location.href = session.url;
-
-  
-
-
-    // const res = await createAppointment(appointmentData)
-    // console.log(res);
-  }
+    const session = await res.json();
+    window.location.href = session.url;
+  };
 
   return (
-    <div className="flex-1">
-      <Card className="sticky top-24 p-6 rounded-3xl shadow-sm">
+    <div className="w-full shrink-0 md:w-80 lg:w-96">
+      <Card className="p-6 md:sticky md:top-24">
         <div>
           <h3 className="text-3xl font-bold text-foreground">
             Book Appointment
           </h3>
 
-          <p className="mt-2 text-default-500">
+          <p className="mt-2 text-muted">
             Select a day and time slot to proceed
           </p>
         </div>
 
         {/* Days */}
-        <div className="mt-3">
+        <div className="mt-5">
           <h4 className="mb-3 text-lg font-medium">Select Day</h4>
 
           <div className="flex flex-wrap gap-3">
@@ -91,9 +61,7 @@ const RightSide = ({ schedule, user }) => {
                   onClick={() => setSelectedDay(day)}
                   key={index}
                   className={
-                    selectedDay === day
-                      ? "bg-accent/50 text-foreground"
-                      : "bg-background"
+                    selectedDay === day ? "bg-accent/20 text-foreground" : ""
                   }
                   variant="outline"
                 >
@@ -104,7 +72,7 @@ const RightSide = ({ schedule, user }) => {
         </div>
 
         {/* Time Slots */}
-        <div className="mt-3">
+        <div className="mt-5">
           <h4 className="mb-3 text-lg font-medium">Select Time Slot</h4>
 
           <div className="grid grid-cols-2 gap-3">
@@ -113,9 +81,7 @@ const RightSide = ({ schedule, user }) => {
                 <Button
                   key={index}
                   onClick={() => setSelectedTime(time)}
-                  className={
-                    selectedTime === time ? "bg-accent/50" : "bg-background"
-                  }
+                  className={selectedTime === time ? "bg-accent/20" : ""}
                   fullWidth
                   variant="outline"
                 >
@@ -126,15 +92,15 @@ const RightSide = ({ schedule, user }) => {
         </div>
 
         {/* Fee Card */}
-        <div className="mt-3 rounded-2xl bg-primary/5 px-5">
+        <div className="mt-5 rounded-2xl bg-accent-soft p-5">
           <div className="flex items-center justify-between">
-            <span className="text-default-600">Consultation Fee</span>
+            <span className="text-muted">Consultation Fee</span>
 
             <span className="font-semibold">${schedule?.fee}</span>
           </div>
 
           <div className="mt-3 flex items-center justify-between">
-            <span className="text-default-600">Platform Fee</span>
+            <span className="text-muted">Platform Fee</span>
 
             <span>$5</span>
           </div>
@@ -151,11 +117,11 @@ const RightSide = ({ schedule, user }) => {
         </div>
 
         {/* Selected Slot */}
-        <div className="mt-6 rounded-2xl bg-primary/10 ">
+        <div className="mt-5 rounded-2xl bg-accent-soft p-4">
           <div className="flex items-center gap-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-primary"
+              className="h-5 w-5 text-accent"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -168,18 +134,18 @@ const RightSide = ({ schedule, user }) => {
               />
             </svg>
 
-            <span className="font-medium text-primary">
-              {selectedDay || "day"} at {selectedTime || "0.00"}
+            <span className="font-medium text-accent">
+              {selectedDay || "Select a day"} at {selectedTime || "a time"}
             </span>
           </div>
         </div>
 
         {/* Book Button */}
         <Button
-        type="button"
-        onClick={handleAppointmentSubmit}
+          type="button"
+          onClick={handleAppointmentSubmit}
+          isDisabled={!selectedDay || !selectedTime}
           size="lg"
-          color="primary"
           className="mt-6 w-full text-lg font-semibold"
         >
           Confirm Appointment

@@ -19,7 +19,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 const RegisterPage = () => {
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onSubmit = async (e) => {
@@ -31,7 +31,13 @@ const RegisterPage = () => {
       const form = new FormData(e.currentTarget);
       const formData = Object.fromEntries(form.entries());
 
-      const imageFile = formData.image
+      const imageFile = formData.image;
+
+      if (!(imageFile instanceof File) || imageFile.size === 0) {
+        toast.error("Please choose a profile photo");
+        return;
+      }
+
       const imageData = new FormData();
       imageData.append("image", imageFile);
 
@@ -44,11 +50,12 @@ const RegisterPage = () => {
       );
 
       const imgbbData = await imgbbRes.json();
-
       const imageUrl = imgbbData?.data?.url;
 
-
-
+      if (!imageUrl) {
+        toast.error("Image upload failed. Please try again.");
+        return;
+      }
 
       const { name, email, role, password } = formData;
 
@@ -62,7 +69,7 @@ const RegisterPage = () => {
       });
 
       if (data) {
-        toast.success("success");
+        toast.success("Account created successfully");
         setIsSubmitted(true);
       }
 
@@ -70,21 +77,19 @@ const RegisterPage = () => {
         toast.error(error.message);
       }
     } catch (err) {
-      // console.log(err);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen py-10">
-      <Card>
-        <div>
-          <h3 className="text-center font-semibold text-2xl text-accent">
-            Register Account
-          </h3>
-        </div>
-        <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
+      <Card className="w-full max-w-md">
+        <h1 className="text-center text-2xl font-semibold text-accent">
+          Register Account
+        </h1>
+        <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
           <TextField
             isRequired
             name="name"
@@ -146,17 +151,22 @@ const RegisterPage = () => {
           {/* file upload */}
 
           <div className="space-y-2">
-            <Label>Profile Photo</Label>
+            <Label htmlFor="image" isRequired>
+              Profile Photo
+            </Label>
 
             <input
+              id="image"
               type="file"
               name="image"
               accept="image/*"
               required
-              className="block w-full rounded-lg border p-2"
+              className="block w-full rounded-xl border border-border bg-surface p-2 text-sm text-slate-700 file:mr-3 file:rounded-lg file:border-0 file:bg-accent-soft file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-accent hover:file:bg-accent/20"
             />
 
-            <FieldError />
+            <p className="text-xs text-muted">
+              Upload a clear photo in JPG or PNG format.
+            </p>
           </div>
 
           <TextField
@@ -186,27 +196,31 @@ const RegisterPage = () => {
             <FieldError />
           </TextField>
 
-          <div>
-            <Button
-              type="submit"
-              isPending={isLoading}
-              isDisabled={isLoading}
-              className={"w-full rounded-2xl"}
-            >
-              {isLoading && <Spinner color="current" size="sm" />}
+          <Button
+            type="submit"
+            isPending={isLoading}
+            isDisabled={isLoading || isSubmitted}
+            className="w-full"
+          >
+            {isLoading && <Spinner color="current" size="sm" />}
 
-              {isLoading
-                ? "Submitting..."
-                : isSubmitted
-                  ? "Submitted"
-                  : "Submit"}
-            </Button>
-          </div>
+            {isLoading
+              ? "Submitting..."
+              : isSubmitted
+                ? "Submitted"
+                : "Submit"}
+          </Button>
         </Form>
 
-        <div className='text-center font-mono text-lg'>
-                      <p>Already have an account? <Link className=' border-b border-blue-300 hover:border-b-2' href={'/login'}>Login</Link></p>
-                    </div>
+        <p className="text-center text-sm text-slate-600">
+          Already have an account?{" "}
+          <Link
+            className="font-semibold text-accent underline decoration-accent/40 underline-offset-4 hover:decoration-accent"
+            href="/login"
+          >
+            Login
+          </Link>
+        </p>
       </Card>
     </div>
   );

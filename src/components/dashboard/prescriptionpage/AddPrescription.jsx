@@ -29,7 +29,7 @@ const AddPrescription = ({ user }) => {
     <div className="">
         <Button className={`mt-3 ${open ? 'hidden' : 'block'}`} onClick={()=> setOpen(true)}>Add Prescription</Button>
       {open &&(
-        <Card className="mt-10">
+        <Card className="mt-6">
         <div className="flex items-center justify-between">
           <h3 className="font-bold text-xl">Add Prescription</h3>
           <div
@@ -111,13 +111,12 @@ const AddPrescription = ({ user }) => {
             </div>
 
             <div>
-              <Button slot="close" type="submit">
+              <Button type="submit">
                 Add Prescription
               </Button>
             </div>
           </form>
         </div>
-        <div></div>
       </Card>
       )}
     </div>

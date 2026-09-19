@@ -18,7 +18,7 @@ const page = async ({ params }) => {
 
   // console.log(schedule, 'details page');
   return (
-    <div className="container py-10 flex flex-col md:flex-row gap-4">
+    <div className="container flex flex-col gap-6 py-10 md:flex-row lg:gap-8">
       {/* left side */}
 
       <LeftSide schedule={schedule}/>

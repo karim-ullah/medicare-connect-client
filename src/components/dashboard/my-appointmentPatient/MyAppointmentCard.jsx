@@ -1,129 +1,113 @@
 "use client";
-import { deleteAppointment, updateAppointmentDay } from "@/lib/Actions/patient/action";
+import {
+  deleteAppointment,
+  updateAppointmentDay,
+} from "@/lib/Actions/patient/action";
 import { Button, Card, Chip, Input, Label, TextField } from "@heroui/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { FiCalendar, FiClock } from "react-icons/fi";
-import { HiOutlineDocumentText } from "react-icons/hi";
 import { MdOutlinePayments } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+
 const MyAppointmentCard = ({ appointment }) => {
   const [open, setOpen] = useState(false);
   const [appointmentDate, setAppointmentDate] = useState("");
   const router = useRouter();
   const appointmentId = appointment._id;
 
-
   const handleDelete = async () => {
     const res = await deleteAppointment(appointmentId);
     if (res.deletedCount > 0) {
-      toast.success("deleted success");
+      toast.success("Appointment cancelled");
       router.refresh();
     }
   };
 
-  const handleEdit = async() => {
-    const res = await updateAppointmentDay(appointmentId, {appointmentDate})
-    if(res.modifiedCount > 0){
-      toast.success('updated schedule')
-      setOpen(false)
-      router.refresh()
+  const handleEdit = async () => {
+    const res = await updateAppointmentDay(appointmentId, { appointmentDate });
+    if (res.modifiedCount > 0) {
+      toast.success("Appointment rescheduled");
+      setOpen(false);
+      router.refresh();
     }
   };
+
   return (
-    <Card className="w-full shadow bg-background p-0 my-3">
-      <div className="flex flex-col md:flex-row justify-between gap-4 p-3">
+    <Card className="my-3 w-full p-0 shadow">
+      <div className="flex flex-col justify-between gap-4 p-4 md:flex-row">
         {/* Left Side */}
-        <div className="flex gap-5">
+        <div className="flex gap-4 sm:gap-5">
           {/* Icon */}
-          <div className="h-16 w-16 rounded-2xl bg-primary-50 flex items-center justify-center">
-            <FiCalendar className="text-3xl text-primary" />
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-accent-soft">
+            <FiCalendar className="text-3xl text-accent" />
           </div>
 
           {/* Content */}
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             {/* Doctor */}
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex flex-wrap items-center gap-3">
               <h2 className="text-lg font-bold">
                 Dr. {appointment.doctorName}
               </h2>
 
-              <Chip color="success" variant="flat">
+              <Chip color="success" variant="soft">
                 {appointment.status}
               </Chip>
             </div>
 
             {/* Specialization */}
-            <p className="text-foreground text-lg">
+            <p className="text-lg text-foreground">
               {appointment.specialization}
             </p>
 
             {/* Appointment Info */}
-            <div className="flex flex-wrap items-center gap-3 text-default-600">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+              <span className="flex items-center gap-2">
                 <FiCalendar />
-                <span>{appointment.appointmentDate}</span>
-              </div>
+                {appointment.appointmentDate}
+              </span>
 
-              <div className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <FiClock />
-                <span>{appointment.appointmentTime}</span>
-              </div>
+                {appointment.appointmentTime}
+              </span>
 
-              <div className="flex items-center gap-2">
-                <MdOutlinePayments />
-                <span>${appointment.totalFee}</span>
-              </div>
+              {appointment.totalFee != null && (
+                <span className="flex items-center gap-2">
+                  <MdOutlinePayments />${appointment.totalFee}
+                </span>
+              )}
 
-              <div className="text-success font-medium">
+              <span className="font-medium text-success">
                 ✓ {appointment.paymentStatus}
-              </div>
+              </span>
             </div>
-
-            {/* Reason */}
-            <div className="bg-default-100 rounded-xl flex items-center gap-2 max-w-md">
-              <HiOutlineDocumentText className="text-default-500" />
-              <span>Annual cardiac checkup</span>
-            </div>
-
-            {/* Transaction */}
-            <p className="font-medium text-sm">
-              TXN:
-              <span className="text-sm">TXN-2026-001892</span>
-            </p>
           </div>
         </div>
 
         {/* Right Side */}
-        {appointment.status !== 'Completed' && (
-           <div className="flex flex-col gap-3 md:min-w-[170px]">
-          <Button
-            onClick={() => setOpen(true)}
-            color="primary"
-            fullWidth
-            variant="outline"
-            className={"bg-background hover:bg-accent/10 text-foreground"}
-          >
-            Reschedule
-          </Button>
+        {appointment.status !== "Completed" && (
+          <div className="flex flex-col gap-3 md:min-w-[170px]">
+            <Button
+              onClick={() => setOpen(true)}
+              variant="outline"
+              fullWidth
+              className="bg-background"
+            >
+              Reschedule
+            </Button>
 
-          <Button
-            onClick={handleDelete}
-            color="danger"
-            fullWidth
-            variant="outline"
-            className={"bg-background hover:bg-accent/10 text-foreground"}
-          >
-            Cancel
-          </Button>
-        </div> 
-        ) }
-        
+            <Button onClick={handleDelete} variant="danger-soft" fullWidth>
+              Cancel
+            </Button>
+          </div>
+        )}
       </div>
 
       {open && (
-        <div className="p-3 flex items-center gap-2 ">
+        <div className="flex items-end gap-3 border-t p-4">
           <TextField
             onChange={(value) => setAppointmentDate(value)}
             className="w-full"
@@ -132,12 +116,19 @@ const MyAppointmentCard = ({ appointment }) => {
             variant="secondary"
           >
             <Label>Update Day</Label>
-            <Input />
+            <Input placeholder="e.g. Monday" />
           </TextField>
 
-          <div className="flex items-center gap-2 mt-5">
-            <Button onClick={handleEdit}>confirm</Button>
-            <RxCross2 />
+          <div className="flex items-center gap-2">
+            <Button onClick={handleEdit}>Confirm</Button>
+            <Button
+              isIconOnly
+              variant="ghost"
+              aria-label="Close"
+              onClick={() => setOpen(false)}
+            >
+              <RxCross2 />
+            </Button>
           </div>
         </div>
       )}

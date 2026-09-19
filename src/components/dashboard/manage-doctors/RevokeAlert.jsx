@@ -20,18 +20,16 @@ const RevokeAlert = ({doctor}) => {
     return (
         <AlertDialog>
       <Button
-          color="danger"
-          variant="outline"
-          className={"bg-accent/10"}
+          variant={doctor.status === 'pending' ? 'primary' : 'danger-soft'}
         >
-          {doctor.status === 'pending' ? 'verify' : 'Revoke'}
+          {doctor.status === 'pending' ? 'Verify' : 'Revoke'}
         </Button>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
           <AlertDialog.Dialog className="sm:max-w-[400px]">
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
-              <AlertDialog.Heading>Want to {doctor.status === 'pending' ? 'verify' : 'Revoke'} now?</AlertDialog.Heading>
+              <AlertDialog.Heading>Want to {doctor.status === 'pending' ? 'verify' : 'revoke'} now?</AlertDialog.Heading>
             </AlertDialog.Header>
             
             <AlertDialog.Footer>
@@ -40,8 +38,8 @@ const RevokeAlert = ({doctor}) => {
               </Button>
               {doctor.status === 'verified' ? <Button slot='close' onClick={()=>handleRevoke('pending')} variant="danger">
                 Revoke
-              </Button> : <Button slot='close' onClick={()=>handleRevoke('verified')} variant="danger">
-                verify
+              </Button> : <Button slot='close' onClick={()=>handleRevoke('verified')} variant="primary">
+                Verify
               </Button>}
               
             </AlertDialog.Footer>

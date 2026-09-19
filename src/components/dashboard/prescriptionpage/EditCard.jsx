@@ -21,7 +21,7 @@ const EditCard = ({prescription, setOpen}) => {
         }
     }
     return (
-        <Card className="mt-10">
+        <Card className="mb-3">
                 <div className="flex items-center justify-between">
                   <h3 className="font-bold text-xl">Update Prescription</h3>
                   <div
@@ -110,13 +110,12 @@ const EditCard = ({prescription, setOpen}) => {
                     </div>
         
                     <div>
-                      <Button slot="close" type="submit">
+                      <Button type="submit">
                         Update Prescription
                       </Button>
                     </div>
                   </form>
                 </div>
-                <div></div>
               </Card>
     );
 };

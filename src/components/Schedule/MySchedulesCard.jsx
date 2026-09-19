@@ -38,6 +38,7 @@ const scheduleId = schedule._id
   }
 
   const handleDelete = async()=>{
+    if (!window.confirm("Delete this schedule?")) return;
     const res = await deleteSchedule(scheduleId)
 
     if(res.deletedCount >0){
@@ -159,19 +160,28 @@ const scheduleId = schedule._id
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-xl">{schedule.day}</h3>
-            <p className="text-primary">
+            <p className="text-muted">
               {schedule.startTime} - {schedule.endTime}
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
 
-            <div className="cursor-pointer border border-accent p-2 rounded-lg hover:bg-accent/50">
-            <FiEdit onClick={handleEdit}></FiEdit>
-            </div>
-            <div className="cursor-pointer border border-accent p-2 rounded-lg hover:bg-accent/50">
-
-            <RiDeleteBin6Line onClick={handleDelete} className="cursor-pointer"></RiDeleteBin6Line>
-            </div>
+            <Button
+              isIconOnly
+              variant="secondary"
+              aria-label="Edit schedule"
+              onClick={handleEdit}
+            >
+              <FiEdit />
+            </Button>
+            <Button
+              isIconOnly
+              variant="danger-soft"
+              aria-label="Delete schedule"
+              onClick={handleDelete}
+            >
+              <RiDeleteBin6Line />
+            </Button>
           </div>
         </div>
       </Card>

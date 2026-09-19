@@ -11,19 +11,23 @@ const FindDoctorsPage = async ({ searchParams }) => {
   const sortBy = sParams.sortBy || "";
   const page = sParams.page;
 
-  const params = new URLSearchParams();
+  const filterParams = new URLSearchParams();
   if (search) {
-    params.set("search", search);
+    filterParams.set("search", search);
   }
   if (specialization) {
-    params.set("specialization", specialization);
+    filterParams.set("specialization", specialization);
   }
   if (sortBy) {
-    params.set("sortBy", sortBy);
+    filterParams.set("sortBy", sortBy);
   }
+  const filterQuery = filterParams.toString();
+
+  const params = new URLSearchParams(filterParams);
   if (page) {
     params.set("page", page);
   }
+
   const data = await getSchedules(params);
   const schedules = data?.schedules ?? [];
 
@@ -40,7 +44,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
               <DoctorCard key={schedule._id} schedule={schedule}></DoctorCard>
             ))}
         </div> : <div className="mt-5 rounded-2xl border border-dashed border-slate-300 bg-white px-5 py-14 text-center"><h2 className="text-lg font-bold text-slate-950">No matching doctors found</h2><p className="mt-2 text-sm text-slate-500">Try a broader search or clear your filters.</p><Link href="/find-doctors" className="secondary-link mt-5">Clear filters</Link></div>}
-        {schedules.length > 0 && <PaginationPart data={data} />}
+        {schedules.length > 0 && <PaginationPart data={data} filterQuery={filterQuery} />}
       </div>
     </main>
   );

@@ -9,7 +9,7 @@ const SchedulePageContent = ({ user, doctor, doctorSchedules }) => {
   const [scheduleOpen, setScheduleOpen] = useState(false);
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <DashboardHeading
           tittle={"Manage Schedule"}
           description={"Set your availability and working hours"}
@@ -32,13 +32,15 @@ const SchedulePageContent = ({ user, doctor, doctorSchedules }) => {
 
       {/* card */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         {doctorSchedules?.length > 0 ? (
           doctorSchedules.map((schedule) => (
             <MySchedulesCard key={schedule._id} schedule={schedule} />
           ))
         ) : (
-          <div className="text-center py-10">No schedules found.</div>
+          <div className="col-span-full rounded-2xl border border-dashed border-border py-10 text-center text-muted">
+            No schedules found.
+          </div>
         )}
       </div>
     </>

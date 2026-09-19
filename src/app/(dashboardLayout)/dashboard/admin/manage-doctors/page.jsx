@@ -1,11 +1,7 @@
 import DashboardHeading from '@/components/dashboard/DashboardHeading';
 import ManageDoctorsCard from '@/components/dashboard/manage-doctors/ManageDoctorsCard';
 import { getDoctors } from '@/lib/Actions/admin/actiions';
-import { Avatar, Button, Card, Chip } from '@heroui/react';
 import React from 'react';
-import { BsShieldFillExclamation } from 'react-icons/bs';
-import { FaStar } from 'react-icons/fa';
-import { MdVerified } from 'react-icons/md';
 
 const ManageDoctors = async() => {
     const doctors = await getDoctors()

@@ -11,7 +11,6 @@ import {
   TextField,
   Select,
 } from "@heroui/react";
-import { set } from "better-auth";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -57,7 +56,7 @@ const DoctorProfilePage = () => {
         description={"Update your professional information"}
       ></DashboardHeading>
 
-      <Card className="flex flex-row mt-6 items-center">
+      <Card className="mt-6 flex flex-row items-center gap-4">
         <div>
           {user?.image && (
             <Image
@@ -69,10 +68,10 @@ const DoctorProfilePage = () => {
             />
           )}
         </div>
-        <div>
-          <h3>{user?.name}</h3>
-          <p>cardiologist</p>
-          <p>Dhaka metro hospital</p>
+        <div className="min-w-0">
+          <h3 className="font-semibold">{user?.name}</h3>
+          <p className="text-sm capitalize text-muted">{user?.role}</p>
+          <p className="truncate text-sm text-muted">{user?.email}</p>
         </div>
       </Card>
 
@@ -299,12 +298,12 @@ const DoctorProfilePage = () => {
               aria-label="Bio"
               name="bio"
               variant="secondary"
-              className="h-26 w-96"
+              className="h-26 w-full"
               placeholder="Enter your bio..."
             />
 
           <div>
-            <Button slot="close" type="submit">
+            <Button type="submit">
               Save Changes
             </Button>
           </div>
