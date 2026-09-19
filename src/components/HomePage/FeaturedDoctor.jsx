@@ -15,7 +15,7 @@ export default async function FeaturedDoctor() {
           <Link className="inline-flex items-center gap-2 self-start text-sm font-bold text-[#087f78] hover:text-[#08645f] sm:self-auto" href="/find-doctors">View all doctors <FiArrowRight aria-hidden="true" /></Link>
         </div>
         {schedules.length > 0 ? (
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{schedules.slice(0, 6).map((schedule) => <DoctorCard key={schedule._id} schedule={schedule} />)}</div>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">{schedules.slice(0, 6).map((schedule) => <DoctorCard key={schedule._id} schedule={schedule} />)}</div>
         ) : (
           <div className="mt-10 rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center"><p className="font-semibold text-slate-900">Doctor schedules are being updated.</p><p className="mt-2 text-sm text-slate-500">Please check back shortly or browse all doctors.</p></div>
         )}

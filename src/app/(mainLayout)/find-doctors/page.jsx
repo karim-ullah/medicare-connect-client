@@ -38,7 +38,7 @@ const FindDoctorsPage = async ({ searchParams }) => {
         <div className="max-w-2xl"><p className="section-kicker">Doctor directory</p><h1 className="section-title mt-3">Find the right doctor for you</h1><p className="mt-4 leading-7 text-slate-600">Search verified specialists, compare key details, and choose an available appointment.</p></div>
         <div className="mt-8"><SearchFilterPanel /></div>
         <div className="mt-8 flex items-center justify-between"><p className="text-sm text-slate-600"><strong className="text-slate-950">{schedules.length}</strong> {schedules.length === 1 ? "doctor" : "doctors"} found</p></div>
-        {schedules.length > 0 ? <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {schedules.length > 0 ? <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {schedules &&
             schedules.map((schedule) => (
               <DoctorCard key={schedule._id} schedule={schedule}></DoctorCard>
